@@ -1,0 +1,1 @@
+This is a simple project to program chess in C from scratch using SDL.

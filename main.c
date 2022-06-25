@@ -29,22 +29,33 @@ SDL_Surface *myMedia = NULL; // SDL_Surface is just an image datatype that conta
 int main(int argc, char *argv[]) {
     if (initSDL()) {
 
-            /* MY CODE */
-            SDL_Rect rect;
-            rect.h = 50;
-            rect.w = 50;
-            rect.x = 0;
-            rect.y = 0;
+            if (loadMedia()) {
+                SDL_BlitSurface(myMedia, NULL, myWindowSurface, NULL);
+            } else {
+                printf("Failed to load media\n");
+            }
 
-            // fill the surface with blue
-            SDL_FillRect(myWindowSurface, &rect, SDL_MapRGB(myWindowSurface->format, 0, 0, 0xFF));
+            // /* MY CODE */
+            // SDL_Rect rect;
+            // rect.h = 50;
+            // rect.w = 50;
+            // rect.x = 0;
+            // rect.y = 0;
+
+            // // fill the surface with blue
+            // SDL_FillRect(myWindowSurface, &rect, SDL_MapRGB(myWindowSurface->format, 0, 0, 0xFF));
 
             // update the window
             SDL_UpdateWindowSurface(myWindow);
 
             // delay to delete
             SDL_Delay(2000);
+    } else {
+        printf("Failure to initialize\n");
     }
+
+    // closes SDL
+    closeSDL();
 
     return 0;
 }
@@ -77,7 +88,7 @@ bool loadMedia() {
     bool success = true;
 
     // Load splash image
-    myMedia = SDL_LoadBMP("images/Test.bmp"); // TODO - need to download a paint function and make some bmp's for this
+    myMedia = SDL_LoadBMP("images/test.bmp"); // TODO - need to download a paint function and make some bmp's for this
 
     if (myMedia == NULL) {
         printf("SDL failed to load media with error: %s\n", SDL_GetError());
@@ -85,4 +96,17 @@ bool loadMedia() {
     }
 
     return success;
+}
+
+void close() {
+    // Deallocate the surface
+    SDL_FreeSurface(myWindowSurface);
+    myWindowSurface = NULL;
+
+    // Destroy the window
+    SDL_DestroyWindow(myWindow);
+    myWindow = NULL;
+
+    // Quit SDL Subsystems
+    SDL_Quit();
 }

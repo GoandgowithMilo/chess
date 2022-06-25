@@ -71,3 +71,18 @@ bool initSDL() {
 
     return success;
 }
+
+bool loadMedia() {
+    // Loading media flag
+    bool success = true;
+
+    // Load splash image
+    myMedia = SDL_LoadBMP("images/Test.bmp"); // TODO - need to download a paint function and make some bmp's for this
+
+    if (myMedia == NULL) {
+        printf("SDL failed to load media with error: %s\n", SDL_GetError());
+        success = false;
+    }
+
+    return success;
+}

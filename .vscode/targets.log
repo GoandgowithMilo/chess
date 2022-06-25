@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sun Jun 12 20:58:55 2022
+# Make data base, printed on Sun Jun 26 07:57:36 2022
 
 # Variables
 
@@ -49,7 +49,7 @@ VSCODE_NLS_CONFIG = {"locale":"en-gb","availableLanguages":{},"_languagePackSupp
 # environment
 _ = /usr/share/code/code
 # environment
-JOURNAL_STREAM = 8:49752
+JOURNAL_STREAM = 8:55273
 # environment
 XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
 # makefile (from 'Makefile', line 1)
@@ -69,7 +69,7 @@ VSCODE_VERBOSE_LOGGING = true
 # makefile (from 'Makefile', line 2)
 OBJS = main.c
 # environment
-MANAGERPID = 1569
+MANAGERPID = 6622
 # environment
 LESSOPEN = | /usr/bin/lesspipe %s
 # environment
@@ -81,7 +81,7 @@ PATH = /home/milo/.local/bin:/home/milo/.local/bin:/home/milo/.local/bin:/home/m
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
-SESSION_MANAGER = local/Milo-ThinkPad-T480:@/tmp/.ICE-unix/1796,unix/Milo-ThinkPad-T480:/tmp/.ICE-unix/1796
+SESSION_MANAGER = local/Milo-ThinkPad-T480:@/tmp/.ICE-unix/7422,unix/Milo-ThinkPad-T480:/tmp/.ICE-unix/7422
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
@@ -91,7 +91,7 @@ VSCODE_LOG_STACK = false
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-INVOCATION_ID = 4475fb65ef13479dafd82623040b3e34
+INVOCATION_ID = 82e5882ada9b4ee7a7f300e90ed439d8
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -101,7 +101,7 @@ XDG_SESSION_DESKTOP = ubuntu
 # environment
 SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 8801
+GIO_LAUNCHED_DESKTOP_FILE_PID = 28399
 # automatic
 %F = $(notdir $%)
 # environment
@@ -113,7 +113,7 @@ PWD = /home/milo/programming/projects/chess
 # default
 .LOADED := 
 # environment
-SSH_AGENT_PID = 1758
+SSH_AGENT_PID = 7268
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
 # makefile (from 'Makefile', line 14)
@@ -153,7 +153,7 @@ CC = gcc
 # environment
 GNOME_SHELL_SESSION_MODE = ubuntu
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-a4b6dab3-a814-44b2-8310-6c7ce24e0d9f.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-e86216b7-e230-40f3-95c3-7c2ec92c0fac.sock
 # default
 MAKE_VERSION := 4.2.1
 # environment
@@ -215,7 +215,7 @@ GJS_DEBUG_OUTPUT = stderr
 # environment
 LANG = C
 # environment
-VSCODE_PID = 8801
+VSCODE_PID = 28399
 # variable set hash-table stats:
 # Load=103/1024=10%, Rehash=0, Collisions=16/137=12%
 
@@ -225,9 +225,9 @@ VSCODE_PID = 8801
 
 # Directories
 
-# . (device 2050, inode 272427): 9 files, no impossibilities.
+# . (device 2050, inode 272427): 10 files, no impossibilities.
 
-# 9 files, no impossibilities in 1 directories.
+# 10 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -266,7 +266,7 @@ all: main.c
 # Not a target:
 main.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-12 20:58:41.141060303
+#  Last modified 2022-06-21 15:48:03.953375309
 #  File has been updated.
 #  Successfully updated.
 
@@ -282,6 +282,7 @@ Makefile:
 #  Last modified 2022-06-12 20:58:50.921038345
 #  File has been updated.
 #  Successfully updated.
+ 
 
 # Not a target:
 .DEFAULT:
@@ -290,7 +291,6 @@ Makefile:
 #  File has not been updated.
 
 # files hash-table stats:
- 
 # Load=5/1024=0%, Rehash=0, Collisions=0/18=0%
 # VPATH Search Paths
 
@@ -298,12 +298,12 @@ Makefile:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 14 / storage = 120 B / avg = 8 B
-# current buf: size = 8162 B / used = 120 B / count = 14 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 15 / storage = 127 B / avg = 8 B
+# current buf: size = 8162 B / used = 127 B / count = 15 / avg = 8 B
 
-# strcache performance: lookups = 22 / hit rate = 36%
+# strcache performance: lookups = 23 / hit rate = 34%
 # hash-table stats:
-# Load=14/8192=0%, Rehash=0, Collisions=1/22=5%
-# Finished Make data base on Sun Jun 12 20:58:55 2022
+# Load=15/8192=0%, Rehash=0, Collisions=1/23=4%
+# Finished Make data base on Sun Jun 26 07:57:36 2022
 
  

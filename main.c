@@ -16,6 +16,15 @@ void closeSDL();
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 
+enum KeyPressSurfaces {
+    KEY_PRESS_SURFACE_DEFAULT,
+    KEY_PRESS_SURFACE_UP,
+    KEY_PRESS_SURFACE_DOWN,
+    KEY_PRESS_SURFACE_LEFT,
+    KEY_PRESS_SURFACE_RIGHT,
+    KEY_PRESS_SURFACE_TOTAL
+};
+
 /* Global Variables */
 // Window we're rendering to
 SDL_Window *myWindow = NULL;
@@ -35,6 +44,24 @@ int main(int argc, char *argv[]) {
                 printf("Failed to load media\n");
             }
 
+            // Quit flag
+            bool quit = false;
+
+            // Event handler
+            SDL_Event e;
+
+            // Event loop
+            while (!quit) {
+                while (SDL_PollEvent(&e) != 0) {
+                    if (e.type == SDL_QUIT) {
+                        quit = true;
+                    }
+                }
+
+                SDL_BlitSurface(myMedia, NULL, myWindowSurface, NULL);
+                SDL_UpdateWindowSurface(myWindow);
+            }
+
             // /* MY CODE */
             // SDL_Rect rect;
             // rect.h = 50;
@@ -44,12 +71,6 @@ int main(int argc, char *argv[]) {
 
             // // fill the surface with blue
             // SDL_FillRect(myWindowSurface, &rect, SDL_MapRGB(myWindowSurface->format, 0, 0, 0xFF));
-
-            // update the window
-            SDL_UpdateWindowSurface(myWindow);
-
-            // delay to delete
-            SDL_Delay(2000);
     } else {
         printf("Failure to initialize\n");
     }
@@ -98,7 +119,7 @@ bool loadMedia() {
     return success;
 }
 
-void close() {
+void closeSDL() {
     // Deallocate the surface
     SDL_FreeSurface(myWindowSurface);
     myWindowSurface = NULL;

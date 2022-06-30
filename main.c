@@ -77,7 +77,15 @@ int main(int argc, char *argv[]) {
                     }
                 }
 
-                SDL_BlitSurface(currentSurface, NULL, myWindowSurface, NULL);
+                // Stretch and blit image
+                SDL_Rect resize;
+                resize.x = 0;
+                resize.y = 0;
+                resize.w = SCREEN_WIDTH;
+                resize.h = SCREEN_HEIGHT;
+                SDL_BlitScaled(currentSurface, NULL, myWindowSurface, &resize);
+
+                // Update surface
                 SDL_UpdateWindowSurface(myWindow);
             }
 
@@ -167,12 +175,23 @@ bool loadMedia() {
 }
 
 SDL_Surface *loadSurface(char *str) {
+    // Optimized image format
+    SDL_Surface *optimizedSurface = NULL;
+
     // Loads an image at the specified file path
     SDL_Surface *loadedSurface = SDL_LoadBMP(str);
 
     if (loadedSurface == NULL) {
         printf("Unable to load image %s! SDL Error: %s\n", str, SDL_GetError());
+    } else {
+        // Convert to screen format
+        optimizedSurface = SDL_ConvertSurface(loadedSurface, myWindowSurface->format, 0);
+        if (optimizedSurface == NULL) {
+            printf("Unable to optimize image %s! SDL Error: %s\n", str, SDL_GetError());
+        }
+
+        SDL_FreeSurface(loadedSurface);
     }
 
-    return loadedSurface;
+    return optimizedSurface;
 }

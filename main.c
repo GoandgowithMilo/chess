@@ -1,16 +1,10 @@
+// Main file containing event loop
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <SDL2/SDL.h>
 
-/* Helper Functions */
-// Initializes SDL, returning true on success or false on failure
-bool initSDL();
-
-// Frees media and shutdowns SDL
-void closeSDL();
-
-// Loads media, returning true on success or false on failure
-bool loadMedia();
+#include "interface.h"
 
 // Loads individual image
 SDL_Surface *loadSurface(char *str);
@@ -45,7 +39,11 @@ SDL_Surface *currentSurface = NULL;
 // SDL_Surface *myMedia = NULL; // SDL_Surface is just an image datatype that contains the pixels of an image + the data to render it correctly --> uses software rendering so CPU
 
 int main(int argc, char *argv[]) {
-    if (initSDL()) {
+    if (initVideo()) {
+
+            myWindow = createWindow();
+            myWindowSurface = getSurface(myWindow);
+
 
             if (loadMedia()) {
                 ;
@@ -97,29 +95,6 @@ int main(int argc, char *argv[]) {
     closeSDL();
 
     return 0;
-}
-
-bool initSDL() {
-    // Initialization flag
-    bool success = true;
-
-    // Initialize SDL
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-        printf("SDL failed to initialize with error: %s\n", SDL_GetError());
-        success = false;
-    } else {
-        // Create window
-        myWindow = SDL_CreateWindow("Chess: Alpha", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-        if (myWindow == NULL) {
-            printf("myWindow failed to initialize: %s\n", SDL_GetError());
-            success = false;
-        } else {
-            // Get window surface
-            myWindowSurface = SDL_GetWindowSurface(myWindow);
-        }
-    }
-
-    return success;
 }
 
 void closeSDL() {

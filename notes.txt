@@ -1,1 +1,4 @@
-> How to make sure images are the right size? test.bmp is way too large
+Constraints:
+ - The screen will be a fixed size and the pieces will be a fixed size within that
+ - The screen is moveable and can be minized but cannot be resized
+ - The position of players is fixed (e.g. white will always be at the bottom, black at the top)

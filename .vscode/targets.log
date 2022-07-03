@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sun Jun 26 07:57:36 2022
+# Make data base, printed on Mon Jul  4 09:42:16 2022
 
 # Variables
 
@@ -67,7 +67,7 @@ DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # makefile (from 'Makefile', line 2)
-OBJS = main.c
+OBJS = main.c interface.c
 # environment
 MANAGERPID = 6622
 # environment
@@ -225,9 +225,9 @@ VSCODE_PID = 28399
 
 # Directories
 
-# . (device 2050, inode 272427): 10 files, no impossibilities.
+# . (device 2050, inode 272427): 13 files, no impossibilities.
 
-# 10 files, no impossibilities in 1 directories.
+# 13 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -235,7 +235,7 @@ VSCODE_PID = 28399
 
 # Files
 
-all: main.c
+all: main.c interface.c
 #  Command line target.
 #  Implicit rule search has not been done.
 #  Implicit/static pattern stem: ''
@@ -249,15 +249,15 @@ all: main.c
 # automatic
 # * := 
 # automatic
-# + := main.c
+# + := main.c interface.c
 # automatic
 # | := 
 # automatic
 # < := main.c
 # automatic
-# ^ := main.c
+# ^ := main.c interface.c
 # automatic
-# ? := main.c
+# ? := main.c interface.c
 # variable set hash-table stats:
 # Load=8/32=25%, Rehash=0, Collisions=3/16=19%
 #  recipe to execute (from 'Makefile', line 18):
@@ -266,7 +266,7 @@ all: main.c
 # Not a target:
 main.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-21 15:48:03.953375309
+#  Last modified 2022-07-04 09:33:19.483132844
 #  File has been updated.
 #  Successfully updated.
 
@@ -279,10 +279,17 @@ main.c:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-12 20:58:50.921038345
+#  Last modified 2022-07-04 09:42:15.174939545
 #  File has been updated.
 #  Successfully updated.
+
+# Not a target:
+interface.c:
+#  Implicit rule search has been done.
  
+#  Last modified 2022-07-04 09:42:16.386939109
+#  File has been updated.
+#  Successfully updated.
 
 # Not a target:
 .DEFAULT:
@@ -291,19 +298,19 @@ Makefile:
 #  File has not been updated.
 
 # files hash-table stats:
-# Load=5/1024=0%, Rehash=0, Collisions=0/18=0%
+# Load=6/1024=1%, Rehash=0, Collisions=0/20=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 15 / storage = 127 B / avg = 8 B
-# current buf: size = 8162 B / used = 127 B / count = 15 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 18 / storage = 161 B / avg = 8 B
+# current buf: size = 8162 B / used = 161 B / count = 18 / avg = 8 B
 
-# strcache performance: lookups = 23 / hit rate = 34%
+# strcache performance: lookups = 27 / hit rate = 33%
 # hash-table stats:
-# Load=15/8192=0%, Rehash=0, Collisions=1/23=4%
-# Finished Make data base on Sun Jun 26 07:57:36 2022
+# Load=18/8192=0%, Rehash=0, Collisions=1/27=4%
+# Finished Make data base on Mon Jul  4 09:42:16 2022
 
  

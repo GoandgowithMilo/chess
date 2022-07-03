@@ -1,5 +1,5 @@
 # Project files
-OBJS = main.c
+OBJS = main.c interface.c
 
 # Executable Name
 NAME = chess.out

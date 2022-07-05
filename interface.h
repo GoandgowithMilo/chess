@@ -10,7 +10,13 @@ SDL_Window *createWindow();
 SDL_Surface *getSurface(SDL_Window *window);
 
 // Frees media and shutdowns SDL
-void closeSDL();
+void closeSDL(SDL_Window *window, SDL_Surface *surface);
 
 // Loads media, returning true on success or false on failure
 bool loadMedia();
+
+// Returns the screen width
+int getWidth();
+
+// Returns the screen height
+int getHeight();

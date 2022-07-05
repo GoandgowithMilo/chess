@@ -9,10 +9,6 @@
 // Loads individual image
 SDL_Surface *loadSurface(char *str);
 
-/* Constants */
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
-
 enum KeyPressSurfaces {
     KEY_PRESS_SURFACE_DEFAULT,
     KEY_PRESS_SURFACE_UP,
@@ -79,8 +75,8 @@ int main(int argc, char *argv[]) {
                 SDL_Rect resize;
                 resize.x = 0;
                 resize.y = 0;
-                resize.w = SCREEN_WIDTH;
-                resize.h = SCREEN_HEIGHT;
+                resize.w = getWidth();
+                resize.h = getHeight();
                 SDL_BlitScaled(currentSurface, NULL, myWindowSurface, &resize);
 
                 // Update surface
@@ -92,22 +88,9 @@ int main(int argc, char *argv[]) {
     }
 
     // closes SDL
-    closeSDL();
+    closeSDL(myWindow, myWindowSurface);
 
     return 0;
-}
-
-void closeSDL() {
-    // Deallocate the surface
-    SDL_FreeSurface(myWindowSurface);
-    myWindowSurface = NULL;
-
-    // Destroy the window
-    SDL_DestroyWindow(myWindow);
-    myWindow = NULL;
-
-    // Quit SDL Subsystems
-    SDL_Quit();
 }
 
 bool loadMedia() {

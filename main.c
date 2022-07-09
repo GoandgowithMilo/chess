@@ -9,6 +9,9 @@
 // Loads individual image
 SDL_Surface *loadSurface(char *str);
 
+// Fills the surfaces for the grid
+void fillBoard();
+
 enum KeyPressSurfaces {
     KEY_PRESS_SURFACE_DEFAULT,
     KEY_PRESS_SURFACE_UP,
@@ -19,6 +22,9 @@ enum KeyPressSurfaces {
 };
 
 /* Global Variables */
+// Surface map for game board
+SDL_Surface *board[8][8];
+
 // Window we're rendering to
 SDL_Window *myWindow = NULL;
 
@@ -40,14 +46,6 @@ int main(int argc, char *argv[]) {
             myWindow = createWindow();
             myWindowSurface = getSurface(myWindow);
 
-
-            if (loadMedia()) {
-                ;
-                // SDL_BlitSurface(currentSurface, NULL, myWindowSurface, NULL);
-            } else {
-                printf("Failed to load media!\n");
-            }
-
             // Quit flag
             bool quit = false;
 
@@ -60,14 +58,22 @@ int main(int argc, char *argv[]) {
             // Event loop
             while (!quit) {
                 while (SDL_PollEvent(&e) != 0) {
-                    if (e.type == SDL_QUIT) {
+                    if (e.type == SDL_QUIT) { // quits the event loop
                         quit = true;
-                    } else if (e.type == SDL_KEYDOWN) {
-                        if (e.key.keysym.sym == SDLK_q) {
-                            currentSurface = keyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT];
-                        } else {
-                            currentSurface = keyPressSurfaces[KEY_PRESS_SURFACE_UP]; // all the others are the same
-                        }
+                    } else {
+                        ;
+                    }
+                }
+
+                // Coloured Square
+                myWindowSurface = SDL_CreateRGBSurface(0, getWidth(), getHeight(), 32, 0, 0, 0, 0);
+                SDL_FillRect(myWindowSurface, NULL, SDL_MapRGB(currentSurface->format, 0, 0, 0));
+
+                fillBoard();
+
+                for (int i = 0; i < 7; i++) {
+                    for (int j = 0; j < 7; j++) {
+                        SDL_BlitSurface(board[i][j], NULL, myWindowSurface, NULL);
                     }
                 }
 
@@ -152,4 +158,19 @@ SDL_Surface *loadSurface(char *str) {
     }
 
     return optimizedSurface;
+}
+
+void fillBoard() {
+
+    for (int i = 0; i < 7; i++) {
+        for (int j = 0; j < 7; j++) {
+            board[i][j] = SDL_CreateRGBSurface(0, getWidth()/8, getHeight()/8, 32, 0, 0, 0, 0);
+
+            if (i % 2 == 0) {
+                SDL_FillRect(board[i][j], NULL, SDL_MapRGB(board[i][j]->format, 0, 255, 0));
+            } else {
+                SDL_FillRect(board[i][j], NULL, SDL_MapRGB(board[i][j]->format, 255, 0, 0));
+            }
+        }
+    }
 }

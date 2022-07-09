@@ -5,3 +5,6 @@ Constraints:
 
 Notes:
  - A chess board is 8x8
+ - If I make an 8x8 grid of rectangles I can use SDL_RectFills to fast fill all of a set the right colour
+ - Possibly I can extend this to making an 8x8 set of my own objects which have the colour fill for the square +
+ - some details about what piece is stored in them

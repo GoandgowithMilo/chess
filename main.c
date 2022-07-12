@@ -43,17 +43,14 @@ SDL_Surface *currentSurface = NULL;
 int main(int argc, char *argv[]) {
     if (initVideo()) {
 
-            myWindow = createWindow();
-            myWindowSurface = getSurface(myWindow);
+            myWindow = createWindow(); // create the window
+            myWindowSurface = getSurface(myWindow); // get the surface for that window
 
             // Quit flag
             bool quit = false;
 
             // Event handler
             SDL_Event e;
-
-            // Set default current surface
-            currentSurface = keyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT];
 
             // Event loop
             while (!quit) {
@@ -65,25 +62,22 @@ int main(int argc, char *argv[]) {
                     }
                 }
 
-                // Coloured Square
-                myWindowSurface = SDL_CreateRGBSurface(0, getWidth(), getHeight(), 32, 0, 0, 0, 0);
-                SDL_FillRect(myWindowSurface, NULL, SDL_MapRGB(currentSurface->format, 0, 0, 0));
+                // // Coloured Square// myWindowSurface = SDL_CreateRGBSurface(0, getWidth(), getHeight(), 32, 0, 0, 0, 0);
+                SDL_FillRect(myWindowSurface, NULL, SDL_MapRGB(myWindowSurface->format, 0, 255, 0));
 
                 fillBoard();
 
                 for (int i = 0; i < 7; i++) {
-                    for (int j = 0; j < 7; j++) {
-                        SDL_BlitSurface(board[i][j], NULL, myWindowSurface, NULL);
+                    for (int j = 0; j < 7; j++) { //TODO - need to do some maths here to work out correct size and positions for grid squares
+                        SDL_Rect position;
+                        position.h = getHeight()/8;
+                        position.w = getWidth()/8;
+                        position.x = getWidth()/8 * j;
+                        position.y = getHeight()/8 * i;
+                        SDL_BlitSurface(board[i][j], NULL, myWindowSurface, &position);
                     }
                 }
 
-                // Stretch and blit image
-                SDL_Rect resize;
-                resize.x = 0;
-                resize.y = 0;
-                resize.w = getWidth();
-                resize.h = getHeight();
-                SDL_BlitScaled(currentSurface, NULL, myWindowSurface, &resize);
 
                 // Update surface
                 SDL_UpdateWindowSurface(myWindow);
@@ -167,7 +161,7 @@ void fillBoard() {
             board[i][j] = SDL_CreateRGBSurface(0, getWidth()/8, getHeight()/8, 32, 0, 0, 0, 0);
 
             if (i % 2 == 0) {
-                SDL_FillRect(board[i][j], NULL, SDL_MapRGB(board[i][j]->format, 0, 255, 0));
+                SDL_FillRect(board[i][j], NULL, SDL_MapRGB(board[i][j]->format, 0, 0, 255));
             } else {
                 SDL_FillRect(board[i][j], NULL, SDL_MapRGB(board[i][j]->format, 255, 0, 0));
             }

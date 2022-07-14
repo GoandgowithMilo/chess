@@ -12,6 +12,9 @@ SDL_Surface *loadSurface(char *str);
 // Fills the surfaces for the grid
 void fillBoard();
 
+// Creates an outline for the board
+void outlineBoard();
+
 enum KeyPressSurfaces {
     KEY_PRESS_SURFACE_DEFAULT,
     KEY_PRESS_SURFACE_UP,
@@ -45,6 +48,8 @@ int main(int argc, char *argv[]) {
 
             myWindow = createWindow(); // create the window
             myWindowSurface = getSurface(myWindow); // get the surface for that window
+            SDL_FillRect(myWindowSurface, NULL, SDL_MapRGB(myWindowSurface->format, 255, 255, 255));
+            outlineBoard();
 
             // Quit flag
             bool quit = false;
@@ -62,21 +67,22 @@ int main(int argc, char *argv[]) {
                     }
                 }
 
-                // // Coloured Square// myWindowSurface = SDL_CreateRGBSurface(0, getWidth(), getHeight(), 32, 0, 0, 0, 0);
-                SDL_FillRect(myWindowSurface, NULL, SDL_MapRGB(myWindowSurface->format, 0, 255, 0));
+                // Coloured Square// myWindowSurface = SDL_CreateRGBSurface(0, getWidth(), getHeight(), 32, 0, 0, 0, 0);
+                
+                // outlineBoard();
 
-                fillBoard();
+                // fillBoard(); // This is eating all my memory and crashing the program lol
 
-                for (int i = 0; i < 7; i++) {
-                    for (int j = 0; j < 7; j++) { //TODO - need to do some maths here to work out correct size and positions for grid squares
-                        SDL_Rect position;
-                        position.h = getHeight()/8;
-                        position.w = getWidth()/8;
-                        position.x = getWidth()/8 * j;
-                        position.y = getHeight()/8 * i;
-                        SDL_BlitSurface(board[i][j], NULL, myWindowSurface, &position);
-                    }
-                }
+                // for (int i = 0; i < 7; i++) {
+                //     for (int j = 0; j < 7; j++) { //TODO - need to do some maths here to work out correct size and positions for grid squares
+                //         SDL_Rect position;
+                //         position.h = getHeight()/8;
+                //         position.w = getWidth()/8;
+                //         position.x = getWidth()/8 * (j + 1);
+                //         position.y = getHeight()/8 * (i + 1);
+                //         SDL_BlitSurface(board[i][j], NULL, myWindowSurface, &position);
+                //     }
+                // }
 
 
                 // Update surface
@@ -154,14 +160,45 @@ SDL_Surface *loadSurface(char *str) {
     return optimizedSurface;
 }
 
+void outlineBoard() {
+    // Outer boarders
+    int outerBoarders = 64;
+
+    SDL_Surface *outer = SDL_CreateRGBSurface(0, getWidth() - outerBoarders, getHeight() - outerBoarders, 32, 0, 0, 0, 0);
+    SDL_FillRect(outer, NULL, SDL_MapRGB(outer->format, 0, 0, 0));
+    SDL_Rect outerPosition;
+    outerPosition.x = outerBoarders/2;
+    outerPosition.y = outerBoarders/2;
+
+    SDL_BlitSurface(outer, NULL, myWindowSurface, &outerPosition);
+
+    // Inner boarders
+    int innerBoarders = 80;
+
+    SDL_Surface *inner = SDL_CreateRGBSurface(0, getWidth() - innerBoarders, getHeight() - innerBoarders, 32, 0, 0, 0, 0);
+    SDL_FillRect(inner, NULL, SDL_MapRGB(inner->format, 255, 255, 255));
+    SDL_Rect innerPosition;
+    innerPosition.x = innerBoarders/2;
+    innerPosition.y = innerBoarders/2;
+
+    SDL_BlitSurface(inner, NULL, myWindowSurface, &innerPosition);
+}
+
 void fillBoard() {
+
+    int x = 255;
 
     for (int i = 0; i < 7; i++) {
         for (int j = 0; j < 7; j++) {
             board[i][j] = SDL_CreateRGBSurface(0, getWidth()/8, getHeight()/8, 32, 0, 0, 0, 0);
 
             if (i % 2 == 0) {
-                SDL_FillRect(board[i][j], NULL, SDL_MapRGB(board[i][j]->format, 0, 0, 255));
+                SDL_FillRect(board[i][j], NULL, SDL_MapRGB(board[i][j]->format, 0, 0, x));
+                if (x == 255) {
+                    x = 125;
+                } else {
+                    x = 255;
+                }
             } else {
                 SDL_FillRect(board[i][j], NULL, SDL_MapRGB(board[i][j]->format, 255, 0, 0));
             }

@@ -1,5 +1,0 @@
-make --dry-run --keep-going --print-directory
-make: Entering directory '/home/milo/programming/projects/chess'
-gcc main.c interface.c -Wall -Werror -lSDL2 -o chess.out
-make: Leaving directory '/home/milo/programming/projects/chess'
- 

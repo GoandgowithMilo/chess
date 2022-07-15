@@ -49,7 +49,8 @@ int main(int argc, char *argv[]) {
             myWindow = createWindow(); // create the window
             myWindowSurface = getSurface(myWindow); // get the surface for that window
             SDL_FillRect(myWindowSurface, NULL, SDL_MapRGB(myWindowSurface->format, 255, 255, 255));
-            outlineBoard();
+            outlineBoard(myWindowSurface);
+            fillBoard();
 
             // Quit flag
             bool quit = false;
@@ -160,48 +161,39 @@ SDL_Surface *loadSurface(char *str) {
     return optimizedSurface;
 }
 
-void outlineBoard() {
-    // Outer boarders
-    int outerBoarders = 64;
-
-    SDL_Surface *outer = SDL_CreateRGBSurface(0, getWidth() - outerBoarders, getHeight() - outerBoarders, 32, 0, 0, 0, 0);
-    SDL_FillRect(outer, NULL, SDL_MapRGB(outer->format, 0, 0, 0));
-    SDL_Rect outerPosition;
-    outerPosition.x = outerBoarders/2;
-    outerPosition.y = outerBoarders/2;
-
-    SDL_BlitSurface(outer, NULL, myWindowSurface, &outerPosition);
-
-    // Inner boarders
-    int innerBoarders = 80;
-
-    SDL_Surface *inner = SDL_CreateRGBSurface(0, getWidth() - innerBoarders, getHeight() - innerBoarders, 32, 0, 0, 0, 0);
-    SDL_FillRect(inner, NULL, SDL_MapRGB(inner->format, 255, 255, 255));
-    SDL_Rect innerPosition;
-    innerPosition.x = innerBoarders/2;
-    innerPosition.y = innerBoarders/2;
-
-    SDL_BlitSurface(inner, NULL, myWindowSurface, &innerPosition);
-}
-
 void fillBoard() {
 
-    int x = 255;
+    // int x = 255;
 
     for (int i = 0; i < 7; i++) {
         for (int j = 0; j < 7; j++) {
-            board[i][j] = SDL_CreateRGBSurface(0, getWidth()/8, getHeight()/8, 32, 0, 0, 0, 0);
+            // Note that I probably want to make sure I make the surface in the position I want so I can check against
+            // it's position for pieces
+            board[i][j] = SDL_CreateRGBSurface(0, 102, 102, 32, 0, 0, 0, 0);
 
-            if (i % 2 == 0) {
-                SDL_FillRect(board[i][j], NULL, SDL_MapRGB(board[i][j]->format, 0, 0, x));
-                if (x == 255) {
-                    x = 125;
-                } else {
-                    x = 255;
-                }
-            } else {
-                SDL_FillRect(board[i][j], NULL, SDL_MapRGB(board[i][j]->format, 255, 0, 0));
-            }
+            // if (i % 2 == 0) {
+            //     SDL_FillRect(board[i][j], NULL, SDL_MapRGB(board[i][j]->format, 0, 0, x));
+            //     SDL_Rect position;
+            //     position.x = ((getWidth()) / 8) * (j + 1);
+
+            //     if (x == 255) {
+            //         x = 125;
+            //     } else {
+            //         x = 255;
+            //     }
+            //     SDL_BlitSurface(board[i][j], NULL, myWindowSurface, &position);
+
+            // } else {
+            //     SDL_FillRect(board[i][j], NULL, SDL_MapRGB(board[i][j]->format, 255, 0, 0));
+            // }
+            SDL_FillRect(board[i][j], NULL, SDL_MapRGB(board[i][j]->format, 0, 0, 255));
+            SDL_Rect position; // TODO need to do the math for positioning the grid
+            position.x = getOuterBoarderWidth() + getInnerBoarderWidth() - getOuterBoarderWidth();;
+            position.y = getInnerBoarderWidth() - getOuterBoarderWidth();
+            // position.x = (getWidth() - ((getInnerBoarderWidth() + getOuterBoarderWidth()))) / 8;
+            // position.y = (getHeight() - ((getInnerBoarderWidth() + getOuterBoarderWidth()))) / 8;
+
+            SDL_BlitSurface(board[i][j], NULL, myWindowSurface, &position);
         }
     }
 }

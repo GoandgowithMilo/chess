@@ -6,6 +6,8 @@
 /* Constants */
 const int SCREEN_WIDTH = 960;
 const int SCREEN_HEIGHT = 960;
+const int OUTER_BOARDER_WIDTH = 64;
+const int INNER_BOARDER_WIDTH = 80;
 
 bool initVideo() {
     // Initialization flag
@@ -71,4 +73,30 @@ int getWidth() {
 // Returns the screen height
 int getHeight() {
     return SCREEN_HEIGHT;
+}
+
+void outlineBoard(SDL_Surface *surface) {
+    // Outer boarders
+    SDL_Surface *outer = SDL_CreateRGBSurface(0, getWidth() - OUTER_BOARDER_WIDTH, getHeight() - OUTER_BOARDER_WIDTH, 32, 0, 0, 0, 0);
+    SDL_FillRect(outer, NULL, SDL_MapRGB(outer->format, 0, 0, 0));
+    SDL_Rect outerPosition;
+    outerPosition.x = OUTER_BOARDER_WIDTH/2;
+    outerPosition.y = OUTER_BOARDER_WIDTH/2;
+    SDL_BlitSurface(outer, NULL, surface, &outerPosition);
+
+    // Inner boarders
+    SDL_Surface *inner = SDL_CreateRGBSurface(0, getWidth() - INNER_BOARDER_WIDTH, getHeight() - INNER_BOARDER_WIDTH, 32, 0, 0, 0, 0);
+    SDL_FillRect(inner, NULL, SDL_MapRGB(inner->format, 255, 255, 255));
+    SDL_Rect innerPosition;
+    innerPosition.x = INNER_BOARDER_WIDTH/2;
+    innerPosition.y = INNER_BOARDER_WIDTH/2;
+    SDL_BlitSurface(inner, NULL, surface, &innerPosition);
+}
+
+int getOuterBoarderWidth() {
+    return OUTER_BOARDER_WIDTH;
+}
+
+int getInnerBoarderWidth() {
+    return INNER_BOARDER_WIDTH;
 }

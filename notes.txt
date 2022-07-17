@@ -4,10 +4,4 @@ Constraints:
  - The position of players is fixed (e.g. white will always be at the bottom, black at the top)
 
 Notes:
- - A chess board is 8x8
- - If I make an 8x8 grid of rectangles I can use SDL_RectFills to fast fill all of a set the right colour
- - Possibly I can extend this to making an 8x8 set of my own objects which have the colour fill for the square +
- - some details about what piece is stored in them
-
- Todo:
- - I want the board to have a black outline around it and the background to be white.
+ - Need to fix the math for generating the colours on the grid

@@ -165,35 +165,47 @@ void fillBoard() {
 
     // int x = 255;
 
-    for (int i = 0; i < 7; i++) {
-        for (int j = 0; j < 7; j++) {
-            // Note that I probably want to make sure I make the surface in the position I want so I can check against
-            // it's position for pieces
-            board[i][j] = SDL_CreateRGBSurface(0, 102, 102, 32, 0, 0, 0, 0);
+    // position of squares
+    int squareXBase = (getWidth() - (getWidth() - getInnerBoarderWidth() / 2));
+    int squareYBase = (getHeight() - (getHeight() - getInnerBoarderWidth() / 2));
+    SDL_Rect position;
+    position.x = squareXBase;
+    position.y = squareYBase;
 
-            // if (i % 2 == 0) {
-            //     SDL_FillRect(board[i][j], NULL, SDL_MapRGB(board[i][j]->format, 0, 0, x));
-            //     SDL_Rect position;
-            //     position.x = ((getWidth()) / 8) * (j + 1);
+    // size of squares
+    int squareWidth = (getWidth() - getInnerBoarderWidth()) / 8;
+    int squareHeight = (getHeight() - getInnerBoarderWidth()) / 8;
 
-            //     if (x == 255) {
-            //         x = 125;
-            //     } else {
-            //         x = 255;
-            //     }
-            //     SDL_BlitSurface(board[i][j], NULL, myWindowSurface, &position);
+    // square colour
+    int squareRed = 255;
+    int squareGreen = 255;
+    int squareBlue = 255;
 
-            // } else {
-            //     SDL_FillRect(board[i][j], NULL, SDL_MapRGB(board[i][j]->format, 255, 0, 0));
-            // }
-            SDL_FillRect(board[i][j], NULL, SDL_MapRGB(board[i][j]->format, 0, 0, 255));
-            SDL_Rect position; // TODO need to do the math for positioning the grid
-            position.x = getOuterBoarderWidth() + getInnerBoarderWidth() - getOuterBoarderWidth();;
-            position.y = getInnerBoarderWidth() - getOuterBoarderWidth();
-            // position.x = (getWidth() - ((getInnerBoarderWidth() + getOuterBoarderWidth()))) / 8;
-            // position.y = (getHeight() - ((getInnerBoarderWidth() + getOuterBoarderWidth()))) / 8;
-
+    for (int i = 1; i <= 8; i++) {
+        for (int j = 1; j <= 8; j++) {
+            // creates surface
+            board[i][j] = SDL_CreateRGBSurface(0, squareWidth, squareHeight, 32, 0, 0, 0, 0);
+            // adds colour to surface
+            SDL_FillRect(board[i][j], NULL, SDL_MapRGB(board[i][j]->format, squareRed, squareGreen, squareBlue));
+            // blits surface in correct position
             SDL_BlitSurface(board[i][j], NULL, myWindowSurface, &position);
+
+            // updates colour
+            if ((i + j) % 2 == 0) {
+                squareRed = 0;
+                squareGreen = 0;
+                squareBlue = 0;
+            } else {
+                squareRed = 255;
+                squareGreen = 255;
+                squareBlue = 255;
+            }
+            
+            // updates position width
+            position.x += squareWidth;
         }
+        // updates position height and resets width
+        position.x = squareXBase;
+        position.y += squareHeight;
     }
 }

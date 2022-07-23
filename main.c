@@ -176,13 +176,33 @@ void fillBoard() {
     int squareWidth = (getWidth() - getInnerBoarderWidth()) / 8;
     int squareHeight = (getHeight() - getInnerBoarderWidth()) / 8;
 
+    // colour flags
+    bool colFlag = true;
+    int colourA = 0;
+    int colourB = 255;
+
     // square colour
-    int squareRed = 255;
-    int squareGreen = 255;
-    int squareBlue = 255;
+    int squareRed = colourB;
+    int squareGreen = colourB;
+    int squareBlue = colourB;
 
     for (int i = 1; i <= 8; i++) {
         for (int j = 1; j <= 8; j++) {
+            // updates colour
+            if (colFlag) {
+                squareRed = colourB;
+                squareGreen = colourB;
+                squareBlue = colourB;
+                
+                colFlag = false;
+            } else {
+                squareRed = colourA;
+                squareGreen = colourA;
+                squareBlue = colourA;
+
+                colFlag = true;
+            }
+
             // creates surface
             board[i][j] = SDL_CreateRGBSurface(0, squareWidth, squareHeight, 32, 0, 0, 0, 0);
             // adds colour to surface
@@ -190,20 +210,19 @@ void fillBoard() {
             // blits surface in correct position
             SDL_BlitSurface(board[i][j], NULL, myWindowSurface, &position);
 
-            // updates colour
-            if ((i + j) % 2 == 0) {
-                squareRed = 0;
-                squareGreen = 0;
-                squareBlue = 0;
-            } else {
-                squareRed = 255;
-                squareGreen = 255;
-                squareBlue = 255;
-            }
-            
             // updates position width
             position.x += squareWidth;
         }
+
+        // upating the grid pattern
+        if (i % 2 != 0) {
+            colourA = 255;
+            colourB = 0;
+        } else {
+            colourA = 0;
+            colourB = 255;
+        }
+
         // updates position height and resets width
         position.x = squareXBase;
         position.y += squareHeight;

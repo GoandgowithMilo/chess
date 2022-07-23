@@ -4,4 +4,4 @@ Constraints:
  - The position of players is fixed (e.g. white will always be at the bottom, black at the top)
 
 Notes:
- - Need to fix the math for generating the colours on the grid
+ - Need to create some pieces and implement fen notation for their arrangement

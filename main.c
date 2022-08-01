@@ -58,6 +58,29 @@ int main(int argc, char *argv[]) {
             // Event handler
             SDL_Event e;
 
+            /* 
+                TESTING STUFF
+                Need to have a load media function
+                Need to remove the background from an image and workout how to do this
+                work out how to use this from spritesheets
+
+                Also need to functionize fillboard and move it elswhere
+            */
+
+            // tasks:
+            // 1. how do I import an image without its background? Can bitmap images be background free? Should I import as png instead?
+            // 2. how do I import images as a spritesheet and load them seperately
+            // 3. function for positioning the different pieces at start of game
+            // 4. fen notation for enabling different arrangement of pieces at start of game
+            
+            loadMedia();
+            SDL_Rect scaling;
+            scaling.h = 90;
+            scaling.w = 90;
+            SDL_BlitScaled(keyPressSurfaces[0], NULL, myWindowSurface, &scaling);
+
+
+
             // Event loop
             while (!quit) {
                 while (SDL_PollEvent(&e) != 0) {
@@ -67,24 +90,6 @@ int main(int argc, char *argv[]) {
                         ;
                     }
                 }
-
-                // Coloured Square// myWindowSurface = SDL_CreateRGBSurface(0, getWidth(), getHeight(), 32, 0, 0, 0, 0);
-                
-                // outlineBoard();
-
-                // fillBoard(); // This is eating all my memory and crashing the program lol
-
-                // for (int i = 0; i < 7; i++) {
-                //     for (int j = 0; j < 7; j++) { //TODO - need to do some maths here to work out correct size and positions for grid squares
-                //         SDL_Rect position;
-                //         position.h = getHeight()/8;
-                //         position.w = getWidth()/8;
-                //         position.x = getWidth()/8 * (j + 1);
-                //         position.y = getHeight()/8 * (i + 1);
-                //         SDL_BlitSurface(board[i][j], NULL, myWindowSurface, &position);
-                //     }
-                // }
-
 
                 // Update surface
                 SDL_UpdateWindowSurface(myWindow);
@@ -105,7 +110,7 @@ bool loadMedia() {
     bool success = true;
 
     // Load default surface
-    keyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT] = loadSurface("images/test1.bmp");
+    keyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT] = loadSurface("images/set.bmp");
     if (keyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT] == NULL) {
         printf("Failed to load default image!\n");
         success = false;

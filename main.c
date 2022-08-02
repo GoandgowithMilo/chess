@@ -5,9 +5,7 @@
 #include <SDL2/SDL.h>
 
 #include "interface.h"
-
-// Loads individual image
-SDL_Surface *loadSurface(char *str);
+#include "manager.h"
 
 // Fills the surfaces for the grid
 void fillBoard();
@@ -15,24 +13,12 @@ void fillBoard();
 // Creates an outline for the board
 void outlineBoard();
 
-enum KeyPressSurfaces {
-    KEY_PRESS_SURFACE_DEFAULT,
-    KEY_PRESS_SURFACE_UP,
-    KEY_PRESS_SURFACE_DOWN,
-    KEY_PRESS_SURFACE_LEFT,
-    KEY_PRESS_SURFACE_RIGHT,
-    KEY_PRESS_SURFACE_TOTAL
-};
-
 /* Global Variables */
 // Window we're rendering to
 SDL_Window *myWindow = NULL;
 
 // The surface contained by the window
 SDL_Surface *myWindowSurface = NULL;
-
-// Images that correspond to key press
-SDL_Surface *keyPressSurfaces[KEY_PRESS_SURFACE_TOTAL];
 
 // Current image displayed
 SDL_Surface *currentSurface = NULL;
@@ -70,11 +56,11 @@ int main(int argc, char *argv[]) {
             // 3. function for positioning the different pieces at start of game
             // 4. fen notation for enabling different arrangement of pieces at start of game
             
-            loadMedia();
-            SDL_Rect scaling;
-            scaling.h = 90;
-            scaling.w = 90;
-            SDL_BlitScaled(keyPressSurfaces[0], NULL, myWindowSurface, &scaling);
+            // loadMedia();
+            // SDL_Rect scaling;
+            // scaling.h = 90;
+            // scaling.w = 90;
+            // SDL_BlitScaled(keyPressSurfaces[0], NULL, myWindowSurface, &scaling);
 
 
 
@@ -100,65 +86,4 @@ int main(int argc, char *argv[]) {
     closeSDL(myWindow, myWindowSurface);
 
     return 0;
-}
-
-bool loadMedia() {
-    // Loading media flag
-    bool success = true;
-
-    // Load default surface
-    keyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT] = loadSurface("images/set.bmp");
-    if (keyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT] == NULL) {
-        printf("Failed to load default image!\n");
-        success = false;
-    }
-
-    // Load other surfaces
-    keyPressSurfaces[KEY_PRESS_SURFACE_UP] = loadSurface("images/test2.bmp");
-    if (keyPressSurfaces[KEY_PRESS_SURFACE_UP] == NULL) {
-        printf("Failed to load up image!\n");
-        success = false;
-    }
-
-    keyPressSurfaces[KEY_PRESS_SURFACE_DOWN] = loadSurface("images/test2.bmp");
-    if (keyPressSurfaces[KEY_PRESS_SURFACE_DOWN] == NULL) {
-        printf("Failed to load down image!\n");
-        success = false;
-    }
-    
-    keyPressSurfaces[KEY_PRESS_SURFACE_LEFT] = loadSurface("images/test2.bmp");
-    if (keyPressSurfaces[KEY_PRESS_SURFACE_LEFT] == NULL) {
-        printf("Failed to load left image!\n");
-        success = false;
-    }
-    
-    keyPressSurfaces[KEY_PRESS_SURFACE_RIGHT] = loadSurface("images/test2.bmp");
-    if (keyPressSurfaces[KEY_PRESS_SURFACE_RIGHT] == NULL) {
-        printf("Failed to load right image!\n");
-        success = false;
-    }
-
-    return success;
-}
-
-SDL_Surface *loadSurface(char *str) {
-    // Optimized image format
-    SDL_Surface *optimizedSurface = NULL;
-
-    // Loads an image at the specified file path
-    SDL_Surface *loadedSurface = SDL_LoadBMP(str);
-
-    if (loadedSurface == NULL) {
-        printf("Unable to load image %s! SDL Error: %s\n", str, SDL_GetError());
-    } else {
-        // Convert to screen format
-        optimizedSurface = SDL_ConvertSurface(loadedSurface, myWindowSurface->format, 0);
-        if (optimizedSurface == NULL) {
-            printf("Unable to optimize image %s! SDL Error: %s\n", str, SDL_GetError());
-        }
-
-        SDL_FreeSurface(loadedSurface);
-    }
-
-    return optimizedSurface;
 }

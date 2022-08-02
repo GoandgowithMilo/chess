@@ -31,3 +31,6 @@ int getOuterBoarderWidth();
 // Returns the height of the inner boarder
 // Note: it's square so n by n
 int getInnerBoarderWidth();
+
+// Generates the grid and outline for the game board
+void fillBoard(SDL_Surface *surface);

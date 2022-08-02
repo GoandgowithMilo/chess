@@ -9,6 +9,10 @@ const int SCREEN_HEIGHT = 960;
 const int OUTER_BOARDER_WIDTH = 64;
 const int INNER_BOARDER_WIDTH = 80;
 
+// Surface map for game board
+SDL_Surface *board[8][8];
+
+
 bool initVideo() {
     // Initialization flag
     bool success = true;
@@ -99,4 +103,69 @@ int getOuterBoarderWidth() {
 
 int getInnerBoarderWidth() {
     return INNER_BOARDER_WIDTH;
+}
+
+void fillBoard(SDL_Surface *surface) {
+    // position of squares
+    int squareXBase = (getWidth() - (getWidth() - getInnerBoarderWidth() / 2));
+    int squareYBase = (getHeight() - (getHeight() - getInnerBoarderWidth() / 2));
+    SDL_Rect position;
+    position.x = squareXBase;
+    position.y = squareYBase;
+
+    // size of squares
+    int squareWidth = (getWidth() - getInnerBoarderWidth()) / 8;
+    int squareHeight = (getHeight() - getInnerBoarderWidth()) / 8;
+
+    // colour flags
+    bool colFlag = true;
+    int colourA = 0;
+    int colourB = 255;
+
+    // square colour
+    int squareRed = colourB;
+    int squareGreen = colourB;
+    int squareBlue = colourB;
+
+    for (int i = 1; i <= 8; i++) {
+        for (int j = 1; j <= 8; j++) {
+            // updates colour
+            if (colFlag) {
+                squareRed = colourB;
+                squareGreen = colourB;
+                squareBlue = colourB;
+                
+                colFlag = false;
+            } else {
+                squareRed = colourA;
+                squareGreen = colourA;
+                squareBlue = colourA;
+
+                colFlag = true;
+            }
+
+            // creates surface
+            board[i][j] = SDL_CreateRGBSurface(0, squareWidth, squareHeight, 32, 0, 0, 0, 0);
+            // adds colour to surface
+            SDL_FillRect(board[i][j], NULL, SDL_MapRGB(board[i][j]->format, squareRed, squareGreen, squareBlue));
+            // blits surface in correct position
+            SDL_BlitSurface(board[i][j], NULL, surface, &position);
+
+            // updates position width
+            position.x += squareWidth;
+        }
+
+        // upating the grid pattern
+        if (i % 2 != 0) {
+            colourA = 255;
+            colourB = 0;
+        } else {
+            colourA = 0;
+            colourB = 255;
+        }
+
+        // updates position height and resets width
+        position.x = squareXBase;
+        position.y += squareHeight;
+    }
 }

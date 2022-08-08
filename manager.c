@@ -62,66 +62,29 @@ void closeSDL(SDL_Window *window, SDL_Surface *surface) {
     SDL_Quit();
 }
 
-// Loads media, returning true on success or false on failure
-bool loadMedia() {
-    // Loading media flag
-    bool success = true;
-
-    // // Load default surface
-    // keyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT] = loadSurface("images/set.bmp");
-    // if (keyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT] == NULL) {
-    //     printf("Failed to load default image!\n");
-    //     success = false;
-    // }
-
-    // // Load other surfaces
-    // keyPressSurfaces[KEY_PRESS_SURFACE_UP] = loadSurface("images/test2.bmp");
-    // if (keyPressSurfaces[KEY_PRESS_SURFACE_UP] == NULL) {
-    //     printf("Failed to load up image!\n");
-    //     success = false;
-    // }
-
-    // keyPressSurfaces[KEY_PRESS_SURFACE_DOWN] = loadSurface("images/test2.bmp");
-    // if (keyPressSurfaces[KEY_PRESS_SURFACE_DOWN] == NULL) {
-    //     printf("Failed to load down image!\n");
-    //     success = false;
-    // }
-    
-    // keyPressSurfaces[KEY_PRESS_SURFACE_LEFT] = loadSurface("images/test2.bmp");
-    // if (keyPressSurfaces[KEY_PRESS_SURFACE_LEFT] == NULL) {
-    //     printf("Failed to load left image!\n");
-    //     success = false;
-    // }
-    
-    // keyPressSurfaces[KEY_PRESS_SURFACE_RIGHT] = loadSurface("images/test2.bmp");
-    // if (keyPressSurfaces[KEY_PRESS_SURFACE_RIGHT] == NULL) {
-    //     printf("Failed to load right image!\n");
-    //     success = false;
-    // }
-
-    return success;
-}
-
-SDL_Surface *loadSurface(char *str) {
-    // Optimized image format
-    SDL_Surface *optimizedSurface = NULL;
+/* TODO */
+// loadFile will be here, create an x by x array in interface then
+// then load each file into that using this funciton
+SDL_Surface *loadFile(char *str) {
+    // // Optimized image format
+    // SDL_Surface *optimizedSurface = NULL;
 
     // // Loads an image at the specified file path
-    // SDL_Surface *loadedSurface = SDL_LoadBMP(str);
+    SDL_Surface *loadedSurface = SDL_LoadBMP(str);
 
-    // if (loadedSurface == NULL) {
-    //     printf("Unable to load image %s! SDL Error: %s\n", str, SDL_GetError());
-    // } else {
-    //     // Convert to screen format
-    //     optimizedSurface = SDL_ConvertSurface(loadedSurface, myWindowSurface->format, 0);
-    //     if (optimizedSurface == NULL) {
-    //         printf("Unable to optimize image %s! SDL Error: %s\n", str, SDL_GetError());
-    //     }
+    if (loadedSurface == NULL) {
+        printf("Unable to load image %s! SDL Error: %s\n", str, SDL_GetError());
+    } else {
+        // Convert to screen format
+        // optimizedSurface = SDL_ConvertSurface(loadedSurface, SDL_Surface->format, 0);
+        // if (optimizedSurface == NULL) {
+        //     printf("Unable to optimize image %s! SDL Error: %s\n", str, SDL_GetError());
+        // }
 
-    //     SDL_FreeSurface(loadedSurface);
-    // }
+        // SDL_FreeSurface(loadedSurface);
+    }
 
-    return optimizedSurface;
+    return loadedSurface;
 }
 
 // Returns the screen width

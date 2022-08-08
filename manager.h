@@ -12,11 +12,8 @@ SDL_Surface *getSurface(SDL_Window *window);
 // Frees media and shutdowns SDL
 void closeSDL(SDL_Window *window, SDL_Surface *surface);
 
-// Loads media, returning true on success or false on failure
-bool loadMedia();
-
-// Loads bitmap at the specified file path to the current location
-SDL_Surface *loadSurface(char *str);
+// Loads a bitmap file
+SDL_Surface *loadFile(char *str);
 
 // Returns the screen width
 int getWidth();

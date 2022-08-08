@@ -13,3 +13,9 @@ int getInnerBoarderWidth();
 
 // Generates the grid and outline for the game board
 void fillBoard(SDL_Surface *surface);
+
+// Loads all pieces onto board surface
+void loadPieces();
+
+// Arranges pieces on board
+void setupBoard();

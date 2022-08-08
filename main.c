@@ -34,6 +34,7 @@ int main(int argc, char *argv[]) {
             SDL_FillRect(myWindowSurface, NULL, SDL_MapRGB(myWindowSurface->format, 255, 255, 255));
             outlineBoard(myWindowSurface);
             fillBoard(myWindowSurface);
+            setupBoard();
 
             // Quit flag
             bool quit = false;

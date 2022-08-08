@@ -101,3 +101,12 @@ void fillBoard(SDL_Surface *surface) {
         position.y += squareHeight;
     }
 }
+
+void loadPieces() {
+    // Need to setup these functions so they put the pieces on the board correctly
+    // board[0][0] = loadFile("./images/test.bmp");
+}
+
+void setupBoard() {
+    loadPieces();
+}

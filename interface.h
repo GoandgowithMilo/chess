@@ -15,7 +15,7 @@ int getInnerBoarderWidth();
 void fillBoard(SDL_Surface *surface);
 
 // Loads all pieces onto board surface
-void loadPieces();
+void loadPieces(SDL_Surface *surface);
 
-// Arranges pieces on board
-void setupBoard();
+// Calls fillBoard, outlineBoard and loadPieces to setup the board
+void setupBoard(SDL_Surface *surface);

@@ -12,6 +12,9 @@ const int INNER_BOARDER_WIDTH = 80;
 SDL_Surface *board[8][8];
 
 void outlineBoard(SDL_Surface *surface) {
+    // Sets background to white
+    SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, 255, 255, 255));
+
     // Outer boarders
     SDL_Surface *outer = SDL_CreateRGBSurface(0, getWidth() - OUTER_BOARDER_WIDTH, getHeight() - OUTER_BOARDER_WIDTH, 32, 0, 0, 0, 0);
     SDL_FillRect(outer, NULL, SDL_MapRGB(outer->format, 0, 0, 0));
@@ -102,11 +105,24 @@ void fillBoard(SDL_Surface *surface) {
     }
 }
 
-void loadPieces() {
+void loadPieces(SDL_Surface *surface) {
+    SDL_Surface *temp = loadFile("images/test.bmp");
+
+    int squareXBase = (getWidth() - (getWidth() - getInnerBoarderWidth() / 2));
+    int squareYBase = (getHeight() - (getHeight() - getInnerBoarderWidth() / 2));
+    SDL_Rect position;
+    position.x = squareXBase;
+    position.y = squareYBase;
+    SDL_BlitSurface(temp, NULL, surface, &position);
+
+    // SDL_surface *optimized_surface = SDL_LoadBMP("images/test.bmp");
+
     // Need to setup these functions so they put the pieces on the board correctly
     // board[0][0] = loadFile("./images/test.bmp");
 }
 
-void setupBoard() {
-    loadPieces();
+void setupBoard(SDL_Surface *surface) {
+    outlineBoard(surface);
+    fillBoard(surface);
+    loadPieces(surface);
 }

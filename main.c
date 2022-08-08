@@ -7,12 +7,6 @@
 #include "interface.h"
 #include "manager.h"
 
-// Fills the surfaces for the grid
-void fillBoard();
-
-// Creates an outline for the board
-void outlineBoard();
-
 /* Global Variables */
 // Window we're rendering to
 SDL_Window *myWindow = NULL;
@@ -20,21 +14,12 @@ SDL_Window *myWindow = NULL;
 // The surface contained by the window
 SDL_Surface *myWindowSurface = NULL;
 
-// Current image displayed
-SDL_Surface *currentSurface = NULL;
-
-// The image we'll load and show on the screen
-// SDL_Surface *myMedia = NULL; // SDL_Surface is just an image datatype that contains the pixels of an image + the data to render it correctly --> uses software rendering so CPU
-
 int main(int argc, char *argv[]) {
     if (initVideo()) {
 
             myWindow = createWindow(); // create the window
             myWindowSurface = getSurface(myWindow); // get the surface for that window
-            SDL_FillRect(myWindowSurface, NULL, SDL_MapRGB(myWindowSurface->format, 255, 255, 255));
-            outlineBoard(myWindowSurface);
-            fillBoard(myWindowSurface);
-            setupBoard();
+            setupBoard(myWindowSurface);
 
             // Quit flag
             bool quit = false;

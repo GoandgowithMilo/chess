@@ -106,7 +106,7 @@ void fillBoard(SDL_Surface *surface) {
 }
 
 void loadPieces(SDL_Surface *surface) {
-    SDL_Surface *temp = loadFile("images/test.bmp");
+    SDL_Surface *temp = loadFile("images/background_test.bmp");
 
     int squareXBase = (getWidth() - (getWidth() - getInnerBoarderWidth() / 2));
     int squareYBase = (getHeight() - (getHeight() - getInnerBoarderWidth() / 2));
@@ -114,11 +114,6 @@ void loadPieces(SDL_Surface *surface) {
     position.x = squareXBase;
     position.y = squareYBase;
     SDL_BlitSurface(temp, NULL, surface, &position);
-
-    // SDL_surface *optimized_surface = SDL_LoadBMP("images/test.bmp");
-
-    // Need to setup these functions so they put the pieces on the board correctly
-    // board[0][0] = loadFile("./images/test.bmp");
 }
 
 void setupBoard(SDL_Surface *surface) {

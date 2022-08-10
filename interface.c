@@ -2,6 +2,7 @@
 
 #include <stdbool.h>
 #include <SDL2/SDL.h>
+
 #include "manager.h"
 
 /* Constants */
@@ -106,14 +107,54 @@ void fillBoard(SDL_Surface *surface) {
 }
 
 void loadPieces(SDL_Surface *surface) {
-    SDL_Surface *temp = loadFile("images/background_test.bmp");
+    SDL_Surface *b_pawn = loadFile("images/b_pawn.png");
+    SDL_Surface *w_pawn = loadFile("images/w_pawn.png");
+    SDL_Surface *b_king = loadFile("images/b_king.png");
+    SDL_Surface *w_king = loadFile("images/w_king.png");
 
+    // position of squares
     int squareXBase = (getWidth() - (getWidth() - getInnerBoarderWidth() / 2));
     int squareYBase = (getHeight() - (getHeight() - getInnerBoarderWidth() / 2));
     SDL_Rect position;
     position.x = squareXBase;
     position.y = squareYBase;
-    SDL_BlitSurface(temp, NULL, surface, &position);
+
+    // size of squares
+    int squareWidth = (getWidth() - getInnerBoarderWidth()) / 8;
+    int squareHeight = (getHeight() - getInnerBoarderWidth()) / 8;
+
+    for (int i = 1; i <= 8; i++) {
+        for (int j = 1; j <= 8; j++) {
+            switch(i) {
+                case 1:
+                    switch(j) {
+                        case 5:
+                            SDL_BlitSurface(b_king, NULL, surface, &position);
+                            break;
+                    }
+                    break;
+                case 8:
+                    switch(j) {
+                        case 5:
+                            SDL_BlitSurface(w_king, NULL, surface, &position);
+                            break;
+                    }
+                    break;
+                case 2:
+                    SDL_BlitSurface(b_pawn, NULL, surface, &position);
+                    break;
+                case 7:
+                    SDL_BlitSurface(w_pawn, NULL, surface, &position);
+                    break;
+            }
+
+            // SDL_BlitSurface(b_pawn, NULL, surface, &position);
+            position.x += squareWidth;
+        }
+
+        position.x = squareXBase;
+        position.y += squareHeight;
+    }
 }
 
 void setupBoard(SDL_Surface *surface) {

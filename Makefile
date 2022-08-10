@@ -11,7 +11,7 @@ CC = gcc
 COMPILER_FLAG = -Wall -Werror
 
 # Linker flags
-LINKER_FLAGS = -lSDL2
+LINKER_FLAGS = -lSDL2 -lSDL2_image
 
 # Target
 all: $(OBJS) 

@@ -2,6 +2,7 @@
 
 #include <stdbool.h>
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 
 /* Constants */
 const int SCREEN_WIDTH = 960;
@@ -20,7 +21,26 @@ bool initVideo() {
     return success;
 }
 
-// Creates a window, returning it on succss or NULL on failure
+bool initPNG() {
+    bool success = true;
+    int flag = IMG_INIT_PNG;
+
+    if (!(IMG_Init(flag) & flag)) {
+        printf("SDL image could not initialize! SDL image error: %s\n", IMG_GetError());
+        success = false;
+    }
+
+    return success;
+}
+
+bool initSDL() {
+    if(initVideo() & initPNG()) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 SDL_Window *createWindow() {
     SDL_Window *window = NULL;
 
@@ -62,15 +82,12 @@ void closeSDL(SDL_Window *window, SDL_Surface *surface) {
     SDL_Quit();
 }
 
-/* TODO */
-// loadFile will be here, create an x by x array in interface then
-// then load each file into that using this funciton
 SDL_Surface *loadFile(char *str) {
     // // Optimized image format
     // SDL_Surface *optimizedSurface = NULL;
 
     // // Loads an image at the specified file path
-    SDL_Surface *loadedSurface = SDL_LoadBMP(str);
+    SDL_Surface *loadedSurface = IMG_Load(str);
 
     if (loadedSurface == NULL) {
         printf("Unable to load image %s! SDL Error: %s\n", str, SDL_GetError());

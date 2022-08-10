@@ -15,7 +15,7 @@ SDL_Window *myWindow = NULL;
 SDL_Surface *myWindowSurface = NULL;
 
 int main(int argc, char *argv[]) {
-    if (initVideo()) {
+    if (initSDL()) {
 
             myWindow = createWindow(); // create the window
             myWindowSurface = getSurface(myWindow); // get the surface for that window

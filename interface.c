@@ -111,6 +111,15 @@ void loadPieces(SDL_Surface *surface) {
     SDL_Surface *w_pawn = loadFile("images/w_pawn.png");
     SDL_Surface *b_king = loadFile("images/b_king.png");
     SDL_Surface *w_king = loadFile("images/w_king.png");
+    SDL_Surface *b_rook = loadFile("images/b_rook.png");
+    SDL_Surface *w_rook = loadFile("images/w_rook.png");
+    SDL_Surface *b_bishop = loadFile("images/b_bishop.png");
+    SDL_Surface *w_bishop = loadFile("images/w_bishop.png");
+    SDL_Surface *b_knight = loadFile("images/b_knight.png");
+    SDL_Surface *w_knight = loadFile("images/w_knight.png");
+    SDL_Surface *b_queen = loadFile("images/b_queen.png");
+    SDL_Surface *w_queen = loadFile("images/w_queen.png");
+
 
     // position of squares
     int squareXBase = (getWidth() - (getWidth() - getInnerBoarderWidth() / 2));
@@ -128,15 +137,57 @@ void loadPieces(SDL_Surface *surface) {
             switch(i) {
                 case 1:
                     switch(j) {
+                        case 1:
+                            SDL_BlitSurface(b_rook, NULL, surface, &position);
+                            break;
+                        case 2:
+                            SDL_BlitSurface(b_knight, NULL, surface, &position);
+                            break;
+                        case 3:
+                            SDL_BlitSurface(b_bishop, NULL, surface, &position);
+                            break;
+                        case 4:
+                            SDL_BlitSurface(b_queen, NULL, surface, &position);
+                            break;
                         case 5:
                             SDL_BlitSurface(b_king, NULL, surface, &position);
+                            break;
+                        case 6:
+                            SDL_BlitSurface(b_bishop, NULL, surface, &position);
+                            break;
+                        case 7:
+                            SDL_BlitSurface(b_knight, NULL, surface, &position);
+                            break;
+                        case 8:
+                            SDL_BlitSurface(b_rook, NULL, surface, &position);
                             break;
                     }
                     break;
                 case 8:
                     switch(j) {
+                        case 1:
+                            SDL_BlitSurface(w_rook, NULL, surface, &position);
+                            break;
+                        case 2:
+                            SDL_BlitSurface(w_knight, NULL, surface, &position);
+                            break;
+                        case 3:
+                            SDL_BlitSurface(w_bishop, NULL, surface, &position);
+                            break;
+                        case 4:
+                            SDL_BlitSurface(w_queen, NULL, surface, &position);
+                            break;
                         case 5:
                             SDL_BlitSurface(w_king, NULL, surface, &position);
+                            break;
+                        case 6:
+                            SDL_BlitSurface(w_bishop, NULL, surface, &position);
+                            break;
+                        case 7:
+                            SDL_BlitSurface(w_knight, NULL, surface, &position);
+                            break;
+                        case 8:
+                            SDL_BlitSurface(w_rook, NULL, surface, &position);
                             break;
                     }
                     break;

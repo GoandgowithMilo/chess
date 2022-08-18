@@ -7,19 +7,31 @@
 #include "interface.h"
 #include "manager.h"
 
-/* Global Variables */
-// Window we're rendering to
-SDL_Window *myWindow = NULL;
-
-// The surface contained by the window
-SDL_Surface *myWindowSurface = NULL;
-
 int main(int argc, char *argv[]) {
+    // Window we're rendering to
+    SDL_Window *myWindow = NULL;
+
+    // The surface contained by the window
+    SDL_Surface *myWindowSurface = NULL;
+
     if (initSDL()) {
 
             myWindow = createWindow(); // create the window
+            SDL_Renderer *renderer = SDL_CreateRenderer(myWindow, -1, 0);
+            if (renderer == NULL) {
+                printf("Failed to setup renderer\n");
+            }
             myWindowSurface = getSurface(myWindow); // get the surface for that window
             setupBoard(myWindowSurface);
+
+            SDL_Rect test;
+            test.w = 200;
+            test.h = 200;
+            test.x = 110;
+            test.y = 110;
+            SDL_SetRenderDrawColor(renderer, 100, 250, 120, 255);
+            SDL_RenderFillRect(renderer, &test);
+            SDL_RenderPresent(renderer);
 
             // Quit flag
             bool quit = false;
@@ -27,28 +39,8 @@ int main(int argc, char *argv[]) {
             // Event handler
             SDL_Event e;
 
-            /* 
-                TESTING STUFF
-                Need to have a load media function
-                Need to remove the background from an image and workout how to do this
-                work out how to use this from spritesheets
-
-                Also need to functionize fillboard and move it elswhere
-            */
-
-            // tasks:
-            // 1. how do I import an image without its background? Can bitmap images be background free? Should I import as png instead?
-            // 2. how do I import images as a spritesheet and load them seperately
-            // 3. function for positioning the different pieces at start of game
-            // 4. fen notation for enabling different arrangement of pieces at start of game
-            
-            // loadMedia();
-            // SDL_Rect scaling;
-            // scaling.h = 90;
-            // scaling.w = 90;
-            // SDL_BlitScaled(keyPressSurfaces[0], NULL, myWindowSurface, &scaling);
-
-
+            // Coordinate
+            SDL_Point mousePos;
 
             // Event loop
             while (!quit) {
@@ -57,6 +49,11 @@ int main(int argc, char *argv[]) {
                         quit = true;
                     } else {
                         ;
+                    }
+                    if (e.type == SDL_MOUSEBUTTONDOWN) {
+                        mousePos.x = e.motion.x;
+                        mousePos.y = e.motion.y;
+                        printf("x: %d, y: %d\n", mousePos.x, mousePos.y);
                     }
                 }
 

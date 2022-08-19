@@ -15,13 +15,24 @@ struct game_piece {
     ;
 };
 
-
 /* Constants */
 const int OUTER_BOARDER_WIDTH = 64;
 const int INNER_BOARDER_WIDTH = 80;
 
-// Surface grid for the game board
-SDL_Surface *board[7][7];
+Square *createBoard() {
+    Square *board = malloc(sizeof(Square) * 64); // this allocates memory for an array of pointers to Squares
+
+    for(int i = 0; i < 64; i++) {
+        Square s = malloc(sizeof(&s)); // this allocates memory for individual squares
+        SDL_Rect r;
+        r.x = 0;
+        r.y = 0;
+        s->rect = r;
+        board[i] = s;
+    }
+
+    return board;
+}
 
 void outlineBoard(SDL_Surface *surface) {
     // Sets background to white
@@ -52,13 +63,10 @@ int getInnerBoarderWidth() {
     return INNER_BOARDER_WIDTH;
 }
 
-void fillBoard(SDL_Surface *surface) {
+void fillBoard(Square *board, SDL_Surface *surface) {
     // position of squares
     int squareXBase = (getWidth() - (getWidth() - getInnerBoarderWidth() / 2));
     int squareYBase = (getHeight() - (getHeight() - getInnerBoarderWidth() / 2));
-    SDL_Rect position;
-    position.x = squareXBase;
-    position.y = squareYBase;
 
     // size of squares
     int squareWidth = (getWidth() - getInnerBoarderWidth()) / 8;
@@ -74,46 +82,56 @@ void fillBoard(SDL_Surface *surface) {
     int squareGreen = colourB;
     int squareBlue = colourB;
 
-    for (int i = 1; i <= 8; i++) {
-        for (int j = 1; j <= 8; j++) {
-            // updates colour
-            if (colFlag) {
-                squareRed = colourB;
-                squareGreen = colourB;
-                squareBlue = colourB;
-                
-                colFlag = false;
-            } else {
-                squareRed = colourA;
-                squareGreen = colourA;
-                squareBlue = colourA;
+    // square tracker
+    int x = squareXBase;
+    int y = squareYBase;
 
-                colFlag = true;
+    for (int i = 1; i <= 64; i++) {
+        SDL_Rect position;
+        position.x = x;
+        position.y = y;
+
+        // updates colour
+        if (colFlag) {
+            squareRed = colourB;
+            squareGreen = colourB;
+            squareBlue = colourB;
+            
+            colFlag = false;
+        } else {
+            squareRed = colourA;
+            squareGreen = colourA;
+            squareBlue = colourA;
+
+            colFlag = true;
+        }
+
+        // creates surface
+        SDL_Surface *surf = SDL_CreateRGBSurface(0, squareWidth, squareHeight, 32, 0, 0, 0, 0);
+        // adds colour to surface
+        SDL_FillRect(surf, NULL, SDL_MapRGB(surf->format, squareRed, squareGreen, squareBlue));
+        // blits surface in correct position
+        SDL_BlitSurface(surf, NULL, surface, &position);
+
+        // updates position width
+        x += squareWidth;
+
+        if (i % 8 == 0) {
+            // upating the grid pattern
+            if (i % 16 != 0) {
+                colourA = 255;
+                colourB = 0;
+            } else {
+                colourA = 0;
+                colourB = 255;
             }
 
-            // creates surface
-            board[i][j] = SDL_CreateRGBSurface(0, squareWidth, squareHeight, 32, 0, 0, 0, 0);
-            // adds colour to surface
-            SDL_FillRect(board[i][j], NULL, SDL_MapRGB(board[i][j]->format, squareRed, squareGreen, squareBlue));
-            // blits surface in correct position
-            SDL_BlitSurface(board[i][j], NULL, surface, &position);
-
-            // updates position width
-            position.x += squareWidth;
+            // updates position height and resets width
+            x = squareXBase;
+            y += squareHeight;
         }
-
-        // upating the grid pattern
-        if (i % 2 != 0) {
-            colourA = 255;
-            colourB = 0;
-        } else {
-            colourA = 0;
-            colourB = 255;
-        }
-
-        // updates position height and resets width
-        position.x = squareXBase;
-        position.y += squareHeight;
+        board[i - 1]->rect.x = position.x;
+        board[i - 1]->rect.y = position.y;
     }
 }
 
@@ -219,8 +237,14 @@ void loadPieces(SDL_Surface *surface) {
     }
 }
 
-void setupBoard(SDL_Surface *surface) {
+void setupBoard(Square *board, SDL_Surface *surface) {
     outlineBoard(surface);
-    fillBoard(surface);
-    loadPieces(surface);
+    fillBoard(board, surface);
+    // loadPieces(surface);
+}
+
+void printBoard(Square *board) {
+    for(int i = 0; i < 64; i++) {
+        printf("Square:%d, x:%d, y:%d\n", i, board[i]->rect.x, board[i]->rect.y);
+    }
 }

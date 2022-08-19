@@ -18,7 +18,7 @@ bool initVideo() {
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         printf("SDL failed to initialize with error: %s\n", SDL_GetError());
         success = false;
-    } 
+    }
 
     return success;
 }

@@ -14,6 +14,9 @@ int main(int argc, char *argv[]) {
     // The surface contained by the window
     SDL_Surface *myWindowSurface = NULL;
 
+    // Create the game board
+    Square * board = createBoard();
+
     if (initSDL()) {
 
             myWindow = createWindow(); // create the window
@@ -22,16 +25,7 @@ int main(int argc, char *argv[]) {
                 printf("Failed to setup renderer\n");
             }
             myWindowSurface = getSurface(myWindow); // get the surface for that window
-            setupBoard(myWindowSurface);
-
-            SDL_Rect test;
-            test.w = 200;
-            test.h = 200;
-            test.x = 110;
-            test.y = 110;
-            SDL_SetRenderDrawColor(renderer, 100, 250, 120, 255);
-            SDL_RenderFillRect(renderer, &test);
-            SDL_RenderPresent(renderer);
+            setupBoard(board, myWindowSurface);
 
             // Quit flag
             bool quit = false;

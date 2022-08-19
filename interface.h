@@ -2,6 +2,9 @@
 typedef struct game_piece *Piece;
 typedef struct grid_square *Square;
 
+// Creates the board data structure
+Square *createBoard();
+
 // Generates the outline and background for the board
 void outlineBoard(SDL_Surface *surface);
 
@@ -14,10 +17,13 @@ int getOuterBoarderWidth();
 int getInnerBoarderWidth();
 
 // Generates the grid and outline for the game board
-void fillBoard(SDL_Surface *surface);
+void fillBoard(Square *board, SDL_Surface *surface);
 
-// Loads all pieces onto board surface
+// // Loads all pieces onto board surface
 void loadPieces(SDL_Surface *surface);
 
 // Calls fillBoard, outlineBoard and loadPieces to setup the board
-void setupBoard(SDL_Surface *surface);
+void setupBoard(Square *board, SDL_Surface *surface);
+
+// Test function to print the board out
+void printBoard(Square *board);

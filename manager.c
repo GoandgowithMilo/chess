@@ -4,6 +4,8 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
+#include "manager.h"
+
 /* Constants */
 const int SCREEN_WIDTH = 960;
 const int SCREEN_HEIGHT = 960;

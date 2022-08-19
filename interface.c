@@ -4,13 +4,24 @@
 #include <SDL2/SDL.h>
 
 #include "manager.h"
+#include "interface.h"
+
+struct grid_square {
+    SDL_Rect rect;
+    Piece *piece;
+};
+
+struct game_piece {
+    ;
+};
+
 
 /* Constants */
 const int OUTER_BOARDER_WIDTH = 64;
 const int INNER_BOARDER_WIDTH = 80;
 
 // Surface grid for the game board
-SDL_Surface *board[8][8];
+SDL_Surface *board[7][7];
 
 void outlineBoard(SDL_Surface *surface) {
     // Sets background to white

@@ -1,4 +1,6 @@
 // Header file for managing visual and interactive components of the game
+typedef struct game_piece *Piece;
+typedef struct grid_square *Square;
 
 // Generates the outline and background for the board
 void outlineBoard(SDL_Surface *surface);

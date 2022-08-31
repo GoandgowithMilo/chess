@@ -8,11 +8,13 @@
 
 struct grid_square {
     SDL_Rect rect;
-    Piece *piece;
+    Piece piece;
 };
 
 struct game_piece {
-    ;
+    int team; // indicates which side the piece belongs to
+    int value; // indicates what the piece is
+    SDL_Surface *image; // stores the visual object for the piece
 };
 
 /* Constants */
@@ -138,7 +140,7 @@ void fillBoard(Square *board, SDL_Surface *surface) {
 
 // update this function to take in the board, iterate through it and place pieces in their correct
 // initial positions as elements of the squares
-void loadPieces(SDL_Surface *surface) {
+void loadPieces(Square *board) {
     SDL_Surface *b_pawn = loadFile("images/b_pawn.png");
     SDL_Surface *w_pawn = loadFile("images/w_pawn.png");
     SDL_Surface *b_king = loadFile("images/b_king.png");
@@ -152,98 +154,184 @@ void loadPieces(SDL_Surface *surface) {
     SDL_Surface *b_queen = loadFile("images/b_queen.png");
     SDL_Surface *w_queen = loadFile("images/w_queen.png");
 
-
-    // position of squares
-    int squareXBase = (getWidth() - (getWidth() - getInnerBoarderWidth() / 2));
-    int squareYBase = (getHeight() - (getHeight() - getInnerBoarderWidth() / 2));
-    SDL_Rect position;
-    position.x = squareXBase;
-    position.y = squareYBase;
-
-    // size of squares
-    int squareWidth = (getWidth() - getInnerBoarderWidth()) / 8;
-    int squareHeight = (getHeight() - getInnerBoarderWidth()) / 8;
-
-    for (int i = 1; i <= 8; i++) {
-        for (int j = 1; j <= 8; j++) {
-            switch(i) {
-                case 1:
-                    switch(j) {
-                        case 1:
-                            SDL_BlitSurface(b_rook, NULL, surface, &position);
-                            break;
-                        case 2:
-                            SDL_BlitSurface(b_knight, NULL, surface, &position);
-                            break;
-                        case 3:
-                            SDL_BlitSurface(b_bishop, NULL, surface, &position);
-                            break;
-                        case 4:
-                            SDL_BlitSurface(b_queen, NULL, surface, &position);
-                            break;
-                        case 5:
-                            SDL_BlitSurface(b_king, NULL, surface, &position);
-                            break;
-                        case 6:
-                            SDL_BlitSurface(b_bishop, NULL, surface, &position);
-                            break;
-                        case 7:
-                            SDL_BlitSurface(b_knight, NULL, surface, &position);
-                            break;
-                        case 8:
-                            SDL_BlitSurface(b_rook, NULL, surface, &position);
-                            break;
-                    }
-                    break;
-                case 8:
-                    switch(j) {
-                        case 1:
-                            SDL_BlitSurface(w_rook, NULL, surface, &position);
-                            break;
-                        case 2:
-                            SDL_BlitSurface(w_knight, NULL, surface, &position);
-                            break;
-                        case 3:
-                            SDL_BlitSurface(w_bishop, NULL, surface, &position);
-                            break;
-                        case 4:
-                            SDL_BlitSurface(w_queen, NULL, surface, &position);
-                            break;
-                        case 5:
-                            SDL_BlitSurface(w_king, NULL, surface, &position);
-                            break;
-                        case 6:
-                            SDL_BlitSurface(w_bishop, NULL, surface, &position);
-                            break;
-                        case 7:
-                            SDL_BlitSurface(w_knight, NULL, surface, &position);
-                            break;
-                        case 8:
-                            SDL_BlitSurface(w_rook, NULL, surface, &position);
-                            break;
-                    }
-                    break;
-                case 2:
-                    SDL_BlitSurface(b_pawn, NULL, surface, &position);
-                    break;
-                case 7:
-                    SDL_BlitSurface(w_pawn, NULL, surface, &position);
-                    break;
-            }
-
-            // SDL_BlitSurface(b_pawn, NULL, surface, &position);
-            position.x += squareWidth;
+    for (int i = 0; i < 64; i++) {
+        if ((i == 0) || (i == 7)) {
+            Piece p = malloc(sizeof(&p)); // allocate memory for the piece
+            p->image = b_rook;
+            p->team = 0;
+            p->value = 1;
+            board[i]->piece = p;       
+        } else 
+        if ((i == 1) || (i == 6)) {
+            Piece p = malloc(sizeof(&p)); // allocate memory for the piece
+            p->image = b_knight;
+            p->team = 0;
+            p->value = 2;
+            board[i]->piece = p;       
+        } else
+        if ((i == 2) || (i == 5)) {
+            Piece p = malloc(sizeof(&p)); // allocate memory for the piece
+            p->image = b_bishop;
+            p->team = 0;
+            p->value = 3;
+            board[i]->piece = p;       
+        } else
+        if (i == 3) {
+            Piece p = malloc(sizeof(&p)); // allocate memory for the piece
+            p->image = b_queen;
+            p->team = 0;
+            p->value = 4;
+            board[i]->piece = p;       
+        } else
+        if (i == 4) {
+            Piece p = malloc(sizeof(&p)); // allocate memory for the piece
+            p->image = b_king;
+            p->team = 0;
+            p->value = 5;
+            board[i]->piece = p;       
+        } else 
+        if ((i > 7) && (i < 16)) {
+            Piece p = malloc(sizeof(&p)); // allocate memory for the piece
+            p->image = b_pawn;
+            p->team = 0;
+            p->value = 0;
+            board[i]->piece = p;       
+        } else 
+        if ((i > 47) && (i < 56)) {
+            Piece p = malloc(sizeof(&p)); // allocate memory for the piece
+            p->image = w_pawn;
+            p->team = 1;
+            p->value = 0;
+            board[i]->piece = p;
+        } else
+        if ((i == 56) || (i == 63)) {
+            Piece p = malloc(sizeof(&p)); // allocate memory for the piece
+            p->image = w_rook;
+            p->team = 1;
+            p->value = 1;
+            board[i]->piece = p;
+        } else
+        if ((i == 57) || (i == 62)) {
+            Piece p = malloc(sizeof(&p)); // allocate memory for the piece
+            p->image = w_knight;
+            p->team = 1;
+            p->value = 2;
+            board[i]->piece = p;
+        } else
+        if ((i == 58) || (i == 61)) {
+            Piece p = malloc(sizeof(&p)); // allocate memory for the piece
+            p->image = w_bishop;
+            p->team = 1;
+            p->value = 3;
+            board[i]->piece = p;
+        } else 
+        if (i == 59) {
+            Piece p = malloc(sizeof(&p)); // allocate memory for the piece
+            p->image = w_queen;
+            p->team = 1;
+            p->value = 4;
+            board[i]->piece = p;
+        } else
+        if (i == 60) {
+            Piece p = malloc(sizeof(&p)); // allocate memory for the piece
+            p->image = w_king;
+            p->team = 1;
+            p->value = 5;
+            board[i]->piece = p;
         }
-
-        position.x = squareXBase;
-        position.y += squareHeight;
     }
+
+    // // position of squares
+    // int squareXBase = (getWidth() - (getWidth() - getInnerBoarderWidth() / 2));
+    // int squareYBase = (getHeight() - (getHeightif ((i == ))() - getInnerBoarderWidth() / 2));
+    // SDL_Rect position;
+    // position.x = squareXBase;
+    // position.y = squareYBase;
+
+    // // size of squares
+    // int squareWidth = (getWidth() - getInnerBoarderWidth()) / 8;
+    // int squareHeight = (getHeight() - getInnerBoarderWidth()) / 8;
+
+    // for (int i = 1; i <= 8; i++) {
+    //     for (int j = 1; j <= 8; j++) {
+    //         switch(i) {
+    //             case 1:
+    //                 switch(j) {
+    //                     case 1:
+    //                         SDL_BlitSurface(b_rook, NULL, surface, &position);
+    //                         break;
+    //                     case 2:
+    //                         SDL_BlitSurface(b_knight, NULL, surface, &position);
+    //                         break;
+    //                     case 3:
+    //                         SDL_BlitSurface(b_bishop, NULL, surface, &position);
+    //                         break;
+    //                     case 4:
+    //                         SDL_BlitSurface(b_queen, NULL, surface, &position);
+    //                         break;
+    //                     case 5:
+    //                         SDL_BlitSurface(b_king, NULL, surface, &position);
+    //                         break;
+    //                     case 6:
+    //                         SDL_BlitSurface(b_bishop, NULL, surface, &position);
+    //                         break;
+    //                     case 7:
+    //                         SDL_BlitSurface(b_knight, NULL, surface, &position);
+    //                         break;
+    //                     case 8:
+    //                         SDL_BlitSurface(b_rook, NULL, surface, &position);
+    //                         break;
+    //                 }
+    //                 break;
+    //             case 8:
+    //                 switch(j) {
+    //                     case 1:
+    //                         SDL_BlitSurface(w_rook, NULL, surface, &position);
+    //                         break;
+    //                     case 2:
+    //                         SDL_BlitSurface(w_knight, NULL, surface, &position);
+    //                         break;
+    //                     case 3:
+    //                         SDL_BlitSurface(w_bishop, NULL, surface, &position);
+    //                         break;
+    //                     case 4:
+    //                         SDL_BlitSurface(w_queen, NULL, surface, &position);
+    //                         break;
+    //                     case 5:
+    //                         SDL_BlitSurface(w_king, NULL, surface, &position);
+    //                         break;
+    //                     case 6:
+    //                         SDL_BlitSurface(w_bishop, NULL, surface, &position);
+    //                         break;
+    //                     case 7:
+    //                         SDL_BlitSurface(w_knight, NULL, surface, &position);
+    //                         break;
+    //                     case 8:
+    //                         SDL_BlitSurface(w_rook, NULL, surface, &position);
+    //                         break;
+    //                 }
+    //                 break;
+    //             case 2:
+    //                 SDL_BlitSurface(b_pawn, NULL, surface, &position);
+    //                 break;
+    //             case 7:
+    //                 SDL_BlitSurface(w_pawn, NULL, surface, &position);
+    //                 break;
+    //         }
+
+    //         // SDL_BlitSurface(b_pawn, NULL, surface, &position);
+    //         position.x += squareWidth;
+    //     }
+
+    //     position.x = squareXBase;
+    //     position.y += squareHeight;
+    // }
 }
 
 void setupBoard(Square *board, SDL_Surface *surface) {
     outlineBoard(surface);
     fillBoard(board, surface);
-    // loadPieces(surface);
+    loadPieces(board);
 }
 
 void printBoard(Square *board) {
@@ -251,10 +339,20 @@ void printBoard(Square *board) {
         printf("Square:%d, x:%d, y:%d ", i, board[i]->rect.x, board[i]->rect.y);
         if(containsPiece(board[i]) == NULL) {
             printf("Does not contain piece!\n");
+        } else {
+            printf("Piece: %d\n", board[i]->piece->value);
         }
     }
 }
 
-Piece *containsPiece(Square square) {
+Piece containsPiece(Square square) {
     return square->piece;
+}
+
+void updateBoard(Square *board, SDL_Surface *surface) {
+    for (int i = 0; i < 64; i++) {
+        if (containsPiece(board[i]) != NULL) {
+            SDL_BlitSurface(board[i]->piece->image, NULL, surface, &board[i]->rect);
+        }
+    }
 }

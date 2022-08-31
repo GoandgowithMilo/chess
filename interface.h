@@ -20,7 +20,7 @@ int getInnerBoarderWidth();
 void fillBoard(Square *board, SDL_Surface *surface);
 
 // // Loads all pieces onto board surface
-void loadPieces(SDL_Surface *surface);
+void loadPieces(Square *board);
 
 // Calls fillBoard, outlineBoard and loadPieces to setup the board
 void setupBoard(Square *board, SDL_Surface *surface);
@@ -30,4 +30,7 @@ void printBoard(Square *board);
 
 // Takes in a square, if the square contains a piece returns that piece, otherwise
 // this function returns NULL
-Piece *containsPiece(Square square);
+Piece containsPiece(Square square);
+
+// Updates the visuals and data structure for the board
+void updateBoard(Square *board, SDL_Surface *surface);

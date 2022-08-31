@@ -52,6 +52,9 @@ int main(int argc, char *argv[]) {
                     }
                 }
 
+                // Updates the buffer and data structure
+                updateBoard(board, myWindowSurface);
+                
                 // Update surface
                 SDL_UpdateWindowSurface(myWindow);
             }

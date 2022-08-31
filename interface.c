@@ -6,17 +6,6 @@
 #include "manager.h"
 #include "interface.h"
 
-struct grid_square {
-    SDL_Rect rect;
-    Piece piece;
-};
-
-struct game_piece {
-    int team; // indicates which side the piece belongs to
-    int value; // indicates what the piece is
-    SDL_Surface *image; // stores the visual object for the piece
-};
-
 /* Constants */
 const int OUTER_BOARDER_WIDTH = 64;
 const int INNER_BOARDER_WIDTH = 80;
@@ -240,92 +229,6 @@ void loadPieces(Square *board) {
             board[i]->piece = p;
         }
     }
-
-    // // position of squares
-    // int squareXBase = (getWidth() - (getWidth() - getInnerBoarderWidth() / 2));
-    // int squareYBase = (getHeight() - (getHeightif ((i == ))() - getInnerBoarderWidth() / 2));
-    // SDL_Rect position;
-    // position.x = squareXBase;
-    // position.y = squareYBase;
-
-    // // size of squares
-    // int squareWidth = (getWidth() - getInnerBoarderWidth()) / 8;
-    // int squareHeight = (getHeight() - getInnerBoarderWidth()) / 8;
-
-    // for (int i = 1; i <= 8; i++) {
-    //     for (int j = 1; j <= 8; j++) {
-    //         switch(i) {
-    //             case 1:
-    //                 switch(j) {
-    //                     case 1:
-    //                         SDL_BlitSurface(b_rook, NULL, surface, &position);
-    //                         break;
-    //                     case 2:
-    //                         SDL_BlitSurface(b_knight, NULL, surface, &position);
-    //                         break;
-    //                     case 3:
-    //                         SDL_BlitSurface(b_bishop, NULL, surface, &position);
-    //                         break;
-    //                     case 4:
-    //                         SDL_BlitSurface(b_queen, NULL, surface, &position);
-    //                         break;
-    //                     case 5:
-    //                         SDL_BlitSurface(b_king, NULL, surface, &position);
-    //                         break;
-    //                     case 6:
-    //                         SDL_BlitSurface(b_bishop, NULL, surface, &position);
-    //                         break;
-    //                     case 7:
-    //                         SDL_BlitSurface(b_knight, NULL, surface, &position);
-    //                         break;
-    //                     case 8:
-    //                         SDL_BlitSurface(b_rook, NULL, surface, &position);
-    //                         break;
-    //                 }
-    //                 break;
-    //             case 8:
-    //                 switch(j) {
-    //                     case 1:
-    //                         SDL_BlitSurface(w_rook, NULL, surface, &position);
-    //                         break;
-    //                     case 2:
-    //                         SDL_BlitSurface(w_knight, NULL, surface, &position);
-    //                         break;
-    //                     case 3:
-    //                         SDL_BlitSurface(w_bishop, NULL, surface, &position);
-    //                         break;
-    //                     case 4:
-    //                         SDL_BlitSurface(w_queen, NULL, surface, &position);
-    //                         break;
-    //                     case 5:
-    //                         SDL_BlitSurface(w_king, NULL, surface, &position);
-    //                         break;
-    //                     case 6:
-    //                         SDL_BlitSurface(w_bishop, NULL, surface, &position);
-    //                         break;
-    //                     case 7:
-    //                         SDL_BlitSurface(w_knight, NULL, surface, &position);
-    //                         break;
-    //                     case 8:
-    //                         SDL_BlitSurface(w_rook, NULL, surface, &position);
-    //                         break;
-    //                 }
-    //                 break;
-    //             case 2:
-    //                 SDL_BlitSurface(b_pawn, NULL, surface, &position);
-    //                 break;
-    //             case 7:
-    //                 SDL_BlitSurface(w_pawn, NULL, surface, &position);
-    //                 break;
-    //         }
-
-    //         // SDL_BlitSurface(b_pawn, NULL, surface, &position);
-    //         position.x += squareWidth;
-    //     }
-
-    //     position.x = squareXBase;
-    //     position.y += squareHeight;
-    // }
 }
 
 void setupBoard(Square *board, SDL_Surface *surface) {
@@ -355,4 +258,24 @@ void updateBoard(Square *board, SDL_Surface *surface) {
             SDL_BlitSurface(board[i]->piece->image, NULL, surface, &board[i]->rect);
         }
     }
+}
+
+int selectedSquare(SDL_Point p) {
+    int result = -1;
+
+    int mouse_x = p.x;
+    int mouse_y = p.y;
+    int x = 0;
+    int y = 0;
+
+    if ((mouse_x > 40) && (mouse_x < 920)) { // check we're in x bounds
+        if ((mouse_y > 40) && (mouse_y < 920)) { // check we're in y bounds
+            x = (mouse_x - 40) / 110;
+            y = (mouse_y - 40) / 110;
+
+            result = (x + y * 8);
+        }
+    }
+
+    return result;
 }

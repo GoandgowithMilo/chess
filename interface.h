@@ -2,6 +2,17 @@
 typedef struct game_piece *Piece;
 typedef struct grid_square *Square;
 
+struct grid_square {
+    SDL_Rect rect;
+    Piece piece;
+};
+
+struct game_piece {
+    int team; // indicates which side the piece belongs to
+    int value; // indicates what the piece is
+    SDL_Surface *image; // stores the visual object for the piece
+};
+
 // Creates the board data structure
 Square *createBoard();
 
@@ -34,3 +45,7 @@ Piece containsPiece(Square square);
 
 // Updates the visuals and data structure for the board
 void updateBoard(Square *board, SDL_Surface *surface);
+
+// Returns the number of the square located at the selection point of the mouse. Returns
+// -1 if the selected isn't within the game board
+int selectedSquare(SDL_Point p);

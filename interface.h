@@ -27,3 +27,7 @@ void setupBoard(Square *board, SDL_Surface *surface);
 
 // Test function to print the board out
 void printBoard(Square *board);
+
+// Takes in a square, if the square contains a piece returns that piece, otherwise
+// this function returns NULL
+Piece *containsPiece(Square square);

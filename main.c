@@ -26,6 +26,7 @@ int main(int argc, char *argv[]) {
             }
             myWindowSurface = getSurface(myWindow); // get the surface for that window
             setupBoard(board, myWindowSurface);
+            printBoard(board);
 
             // Quit flag
             bool quit = false;

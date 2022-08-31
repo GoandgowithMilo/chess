@@ -135,6 +135,9 @@ void fillBoard(Square *board, SDL_Surface *surface) {
     }
 }
 
+
+// update this function to take in the board, iterate through it and place pieces in their correct
+// initial positions as elements of the squares
 void loadPieces(SDL_Surface *surface) {
     SDL_Surface *b_pawn = loadFile("images/b_pawn.png");
     SDL_Surface *w_pawn = loadFile("images/w_pawn.png");
@@ -245,6 +248,13 @@ void setupBoard(Square *board, SDL_Surface *surface) {
 
 void printBoard(Square *board) {
     for(int i = 0; i < 64; i++) {
-        printf("Square:%d, x:%d, y:%d\n", i, board[i]->rect.x, board[i]->rect.y);
+        printf("Square:%d, x:%d, y:%d ", i, board[i]->rect.x, board[i]->rect.y);
+        if(containsPiece(board[i]) == NULL) {
+            printf("Does not contain piece!\n");
+        }
     }
+}
+
+Piece *containsPiece(Square square) {
+    return square->piece;
 }

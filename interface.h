@@ -5,6 +5,7 @@ typedef struct grid_square *Square;
 struct grid_square {
     SDL_Rect rect;
     Piece piece;
+    SDL_Surface *sqr;
 };
 
 struct game_piece {

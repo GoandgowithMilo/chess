@@ -123,6 +123,7 @@ void fillBoard(Square *board, SDL_Surface *surface) {
         }
         board[i - 1]->rect.x = position.x;
         board[i - 1]->rect.y = position.y;
+        board[i - 1]->sqr = surf;
     }
 }
 
@@ -255,7 +256,10 @@ Piece containsPiece(Square square) {
 void updateBoard(Square *board, SDL_Surface *surface) {
     for (int i = 0; i < 64; i++) {
         if (containsPiece(board[i]) != NULL) {
+            SDL_BlitSurface(board[i]->sqr, NULL, surface, &board[i]->rect);
             SDL_BlitSurface(board[i]->piece->image, NULL, surface, &board[i]->rect);
+        } else {
+            SDL_BlitSurface(board[i]->sqr, NULL, surface, &board[i]->rect);
         }
     }
 }

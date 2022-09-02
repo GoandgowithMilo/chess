@@ -57,15 +57,16 @@ int main(int argc, char *argv[]) {
                                     currSqr = board[selectedSquare(mousePos)];
                                     currentSqrPos = mousePos;
                                 }
-                            } else if ((!leftMouseButtonDown) && (e.button.button == SDL_BUTTON_LEFT)) {
-                                // printf("Selected Square: %d, New Square: %d\n", selectedSquare(currentSqrPos), selectedSquare(mousePos));
+                            } else if ((!leftMouseButtonDown) && (e.button.button == SDL_BUTTON_LEFT) && (selectedSquare(mousePos) != -1)) {
+                                // Moving to an empty square
                                 if ((selectedSquare(mousePos) != selectedSquare(currentSqrPos)) && (containsPiece(board[selectedSquare(mousePos)]) == NULL)) {
-                                    printf("THIS RAN\n");
                                     board[selectedSquare(mousePos)]->piece = currSqr->piece;
                                     currSqr->piece = NULL;
-                                    // board[selectedSquare(mousePos)]->rect = currSqr->rect;
-                                    // board[selectedSquare(mousePos)]->
-                                    // SDL_BlitSurface(currSqr->piece->image, NULL, myWindowSurface, &board[selectedSquare(mousePos)]->rect);
+                                } else // Taking a piece
+                                if ((selectedSquare(mousePos) != selectedSquare(currentSqrPos)) && (containsPiece(board[selectedSquare(mousePos)]) != NULL)) {
+                                    
+                                    board[selectedSquare(mousePos)]->piece = currSqr->piece;
+                                    currSqr->piece = NULL;
                                 }
                                 currSqr = NULL;
                             }

@@ -20,13 +20,8 @@ int main(int argc, char *argv[]) {
 
     if (initSDL()) {
             myWindow = createWindow(); // create the window
-            // SDL_Renderer *renderer = SDL_CreateRenderer(myWindow, -1, 0);
-            // if (renderer == NULL) {
-            //     printf("Failed to setup renderer\n");
-            // }
             myWindowSurface = getSurface(myWindow); // get the surface for that window
             setupBoard(board, myWindowSurface);
-            // printBoard(board);
 
             // Quit flag
             bool quit = false;
@@ -38,6 +33,7 @@ int main(int argc, char *argv[]) {
             SDL_Point mousePos;
             bool leftMouseButtonDown = false;
             Square currSqr = NULL;
+            SDL_Point currentSqrPos;
 
             // Event loop
             while (!quit) {
@@ -53,14 +49,20 @@ int main(int argc, char *argv[]) {
                         case SDL_MOUSEBUTTONUP:
                             if (leftMouseButtonDown && (e.button.button == SDL_BUTTON_LEFT)) {
                                 leftMouseButtonDown = false; 
-                                currSqr = NULL;
-                                printf("\nSET NULL\n");
+                                // currSqr = NULL;
+                                // printf("\nSET NULL\n");
                             }
                             break;
                         case SDL_MOUSEBUTTONDOWN:
-                            if ((!leftMouseButtonDown) && (e.button.button == SDL_BUTTON_LEFT)) {
+                            if ((!leftMouseButtonDown) && (e.button.button == SDL_BUTTON_LEFT) && (currSqr == NULL)) {
                                 leftMouseButtonDown = true;
-                                currSqr = board[selectedSquare(mousePos)];
+                                if (selectedSquare(mousePos) != -1) {
+                                    currSqr = board[selectedSquare(mousePos)];
+                                    currentSqrPos = mousePos;
+                                }
+                            } else if ((!leftMouseButtonDown) && (e.button.button == SDL_BUTTON_LEFT)) {
+                                printf("Selected Square: %d, New Square: %d\n", selectedSquare(currentSqrPos), selectedSquare(mousePos));
+                                currSqr = NULL;
                             }
                             break;
                     }

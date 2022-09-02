@@ -6,7 +6,6 @@
 
 #include "interface.h"
 #include "manager.h"
-// #include "interface.c"
 
 int main(int argc, char *argv[]) {
     // Window we're rendering to
@@ -48,20 +47,26 @@ int main(int argc, char *argv[]) {
                             break;
                         case SDL_MOUSEBUTTONUP:
                             if (leftMouseButtonDown && (e.button.button == SDL_BUTTON_LEFT)) {
-                                leftMouseButtonDown = false; 
-                                // currSqr = NULL;
-                                // printf("\nSET NULL\n");
+                                leftMouseButtonDown = false;
                             }
                             break;
                         case SDL_MOUSEBUTTONDOWN:
                             if ((!leftMouseButtonDown) && (e.button.button == SDL_BUTTON_LEFT) && (currSqr == NULL)) {
                                 leftMouseButtonDown = true;
-                                if (selectedSquare(mousePos) != -1) {
+                                if ((selectedSquare(mousePos) != -1) && (containsPiece(board[selectedSquare(mousePos)]) != NULL)) {
                                     currSqr = board[selectedSquare(mousePos)];
                                     currentSqrPos = mousePos;
                                 }
                             } else if ((!leftMouseButtonDown) && (e.button.button == SDL_BUTTON_LEFT)) {
-                                printf("Selected Square: %d, New Square: %d\n", selectedSquare(currentSqrPos), selectedSquare(mousePos));
+                                // printf("Selected Square: %d, New Square: %d\n", selectedSquare(currentSqrPos), selectedSquare(mousePos));
+                                if ((selectedSquare(mousePos) != selectedSquare(currentSqrPos)) && (containsPiece(board[selectedSquare(mousePos)]) == NULL)) {
+                                    printf("THIS RAN\n");
+                                    board[selectedSquare(mousePos)]->piece = currSqr->piece;
+                                    currSqr->piece = NULL;
+                                    // board[selectedSquare(mousePos)]->rect = currSqr->rect;
+                                    // board[selectedSquare(mousePos)]->
+                                    // SDL_BlitSurface(currSqr->piece->image, NULL, myWindowSurface, &board[selectedSquare(mousePos)]->rect);
+                                }
                                 currSqr = NULL;
                             }
                             break;

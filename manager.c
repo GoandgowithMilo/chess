@@ -4,6 +4,8 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
+#include "manager.h"
+
 /* Constants */
 const int SCREEN_WIDTH = 960;
 const int SCREEN_HEIGHT = 960;
@@ -16,7 +18,7 @@ bool initVideo() {
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         printf("SDL failed to initialize with error: %s\n", SDL_GetError());
         success = false;
-    } 
+    }
 
     return success;
 }

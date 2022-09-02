@@ -9,4 +9,13 @@ Notes:
 Next To Do: implement a clean load surface + load media function
 Then: work out how to load images without backgrounds
 
-test
+Team:
+Black = 0, White = 1;
+
+Value:
+Pawn = 0;
+Rook = 1;
+Knight = 2;
+Bishop = 3;
+Queen = 4;
+King = 5;
